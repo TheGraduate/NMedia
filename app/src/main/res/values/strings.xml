@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">NMedia!</string>
     <string name="nmedia">NMedia!</string>
+     //<string name="views" translatable="false">10000</string>
+    //<string name="shares" translatable="false">100</string>
+   // <string name="likes" translatable="false">2000</string>
 </resources>
