@@ -1,7 +1,7 @@
 package ru.netology.nmedia
 
 
-fun calculateParametrs (/*post: Post,*/ value: Int): String {
+fun calculateParametrs (value: Int): String {
     var counter = "0"
     if (value >= 1_000_000 ){
         counter = "${value/1_000_000}" + ".${value % 1_000_000 / 100_000}" + "M"
