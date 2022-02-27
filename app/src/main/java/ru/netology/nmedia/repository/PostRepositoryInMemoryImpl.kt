@@ -13,7 +13,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             content = "Освоение новой профессии — это не только открывающиеся возможности и перспективы, но и настоящий вызов самому себе. Приходится выходить из зоны комфорта и перестраивать привычный образ жизни: менять распорядок дня, искать время для занятий, быть готовым к возможным неудачам в начале пути. В блоге рассказали, как избежать стресса на курсах профпереподготовки → http://netolo.gy/fPD",
             published = "23 сентября в 10:12",
             likedByMe = false,
-            likes = 23,
+            likes = 999,
             shares = 17,
             views = 90
         ),
@@ -102,10 +102,29 @@ class PostRepositoryInMemoryImpl : PostRepository {
     )
 
     private val data = MutableLiveData(posts)
+
     override fun getAll(): LiveData<List<Post>> = data
+
     override fun likeById(id: Long) {
         posts = posts.map {
-            if (it.id != id) it else it.copy(likedByMe = !it.likedByMe)
+            if (it.id != id) {
+                it
+            } else {
+                if (it.likedByMe) {
+                    it.likes--
+                } else {
+                    it.likes++
+                }
+                it.copy(likedByMe = !it.likedByMe)
+
+            }
+        }
+        data.value = posts
+    }
+
+    override fun shareById(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else it.copy(shares = it.shares++)
         }
         data.value = posts
     }
