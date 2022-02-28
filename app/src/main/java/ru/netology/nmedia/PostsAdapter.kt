@@ -23,11 +23,11 @@ typealias OnShareListener = (post: Post) -> Unit
     }*/
 class PostsAdapter(
     private val onLikeListener: OnLikeListener,
-    private val OnShareListener: OnShareListener
+    private val onShareListener: OnShareListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener, OnShareListener)
+        return PostViewHolder(binding, onLikeListener, onShareListener)
 
     }
 
@@ -35,15 +35,6 @@ class PostsAdapter(
         val post = getItem(position)
         holder.bind(post)
     }
-
-
-   /* override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = list[position]
-        holder.bind(post)
-    }*/
-
-    //override fun getItemCount(): Int = list
-
 }
 
 class PostViewHolder(
@@ -57,38 +48,23 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
 
-
-            if (post.likedByMe) {
-                like.setImageResource(R.drawable.ic_baseline_favorited_24)
-            }
-
             likeCount?.text = calculateParametrs(post.likes)
             shareCount?.text = calculateParametrs(post.shares)
             viewCount?.text = calculateParametrs(post.views)
 
+            if (post.likedByMe) {
+                like.setImageResource(R.drawable.ic_baseline_favorited_24)
+            } else {
+                like.setImageResource(R.drawable.ic_baseline_favorite_24)
+            }
+
             like?.setOnClickListener {
                 onLikeListener(post)
-                /*post.likedByMe = !post.likedByMe
-                like.setImageResource(
-                    if (post.likedByMe) {
-                        R.drawable.ic_baseline_favorited_24
-                    } else {
-                        R.drawable.ic_baseline_favorite_24
-                    }
-                )
-                if (post.likedByMe) {
-                    post.likes++
-                } else {
-                    post.likes--
-                }
-                likeCount?.text = calculateParametrs(post.likes)*/
             }
             share?.setOnClickListener {
                 onShareListener(post)
-
-            /*post.shares++
-                shareCount?.text = calculateParametrs(post.shares)*/
             }
+
         }
     }
 }
