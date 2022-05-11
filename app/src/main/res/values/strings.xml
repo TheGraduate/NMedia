@@ -6,6 +6,7 @@
     <string name="description_post_share">Share</string>
     <string name="description_post_author_avatar">Post author avatar</string>
     <string name="description_post_menu">Post menu</string>
+    <string name="description_post_view">Views</string>
     <string name="description_post_save">Save</string>
     <string name="menu_remove">Remove</string>
     <string name="post_text">Post Text</string>

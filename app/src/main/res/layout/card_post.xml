@@ -60,69 +60,82 @@
         app:constraint_referenced_ids="content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-    <TextView
+
+ <!--   <TextView
         android:id="@+id/likeCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="36dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="136dp"
+        android:layout_marginTop="64dp"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/footer"
         tools:text="0" />
-
-    <TextView
+-->
+    <!--<TextView
         android:id="@+id/shareCount"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="64dp"
         android:text="0"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/footer" />
+        app:layout_constraintTop_toBottomOf="@id/footer" />-->
+
+    <!-- app:srcCompat="@drawable/ic_baseline_favorite_24"
+        />-->
 
     <TextView
         android:id="@+id/viewCount"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="24dp"
+        android:layout_width="30dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="24dp"
         android:text="0"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/footer" />
+        app:layout_constraintHorizontal_bias="0.23"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
 
-    <ImageView
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/like"
+        style="@style/Widget.AppTheme.LikeButton"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/likeCount"
-        app:layout_constraintHorizontal_bias="1.0"
+        android:button="@drawable/ic_like_24dp"
+        android:checkable="true"
+        app:icon="@drawable/ic_like_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/content"
-        app:srcCompat="@drawable/ic_baseline_favorite_24" />
+        app:layout_constraintTop_toBottomOf="@+id/content" />
 
-    <ImageView
+    <!--app:srcCompat="@drawable/ic_baseline_share_24"-->
+
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/share"
+        style="@style/Widget.AppTheme.IconButton"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginStart="40dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toStartOf="@+id/shareCount"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/likeCount"
-        app:layout_constraintTop_toBottomOf="@+id/content"
-        app:srcCompat="@drawable/ic_baseline_share_24" />
+        android:button="@drawable/ic_share_24"
+        android:contentDescription="@string/description_post_share"
+        app:icon="@drawable/ic_share_24"
+        app:layout_constraintStart_toEndOf="@+id/like"
+        app:layout_constraintTop_toBottomOf="@+id/content" />
 
     <ImageView
         android:id="@+id/view"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="4dp"
-        app:layout_constraintEnd_toStartOf="@+id/viewCount"
+        style="@style/Widget.AppTheme.IconButton"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
+        android:contentDescription="@string/description_post_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.805"
+        app:layout_constraintStart_toEndOf="@+id/share"
         app:layout_constraintTop_toBottomOf="@+id/content"
         app:srcCompat="@drawable/ic_baseline_visibility_24" />
 
@@ -136,15 +149,19 @@
         app:srcCompat="@drawable/ic_netology_48dp"
         tools:srcCompat="@sample/posts_avatars" />
 
-    <ImageButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/menu"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_more_vert_24"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/common_spacing"
+        style="@style/Widget.AppTheme.IconButton"
+        android:layout_width="40dp"
+        android:layout_height="44dp"
         android:background="@android:color/transparent"
-        android:contentDescription="@string/description_post_menu" />
+        android:contentDescription="@string/description_post_menu"
+        android:minWidth="32dp"
+        android:minHeight="32dp"
+        app:icon="@drawable/ic_more_vert_24"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/author"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!--app:srcCompat="@drawable/ic_baseline_more_vert_24"-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -42,15 +42,23 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
 
-            likeCount?.text = calculateParametrs(post.likes)
-            shareCount?.text = calculateParametrs(post.shares)
+           // likeCount?.text = calculateParametrs(post.likes)
+            //shareCount?.text = calculateParametrs(post.shares)
+
+
+            like.isChecked = post.likedByMe
+            like.text = "${post.likes}"
+            share.text = "${post.shares}"
+
+            like.text = calculateParametrs(post.likes)
+            share.text = calculateParametrs(post.shares)
             viewCount?.text = calculateParametrs(post.views)
 
-            if (post.likedByMe) {
+            /*if (post.likedByMe) {
                 like.setImageResource(R.drawable.ic_baseline_favorited_24)
             } else {
                 like.setImageResource(R.drawable.ic_baseline_favorite_24)
-            }
+            }*/
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {

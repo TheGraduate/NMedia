@@ -16,7 +16,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 999,
             shares = 17,
-            views = 90
+            views = 9000
         ),
         Post(
             id = nextId++,
@@ -26,7 +26,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 54,
             shares = 166,
-            views = 912
+            views = 10022
 
         ),
         Post(
