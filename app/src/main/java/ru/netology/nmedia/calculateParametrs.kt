@@ -1,6 +1,5 @@
 package ru.netology.nmedia
 
-
 fun calculateParametrs (value: Int): String {
     var counter = "0"
     when {

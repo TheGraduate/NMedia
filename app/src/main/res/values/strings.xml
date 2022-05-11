@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">NMedia!</string>
     <string name="nmedia">NMedia!</string>
-     //<string name="views" translatable="false">10000</string>
-    //<string name="shares" translatable="false">100</string>
-   // <string name="likes" translatable="false">2000</string>
+   <!-- <string name="views" >10000</string>-->
+    <string name="description_post_like">Like</string>
+    <string name="description_post_share">Share</string>
+    <string name="description_post_author_avatar">Post author avatar</string>
+    <string name="description_post_menu">Post menu</string>
+    <string name="description_post_save">Save</string>
+    <string name="menu_remove">Remove</string>
+    <string name="post_text">Post Text</string>
+    <string name="menu_edit">Edit</string>
+    <string name="error_empty_content">Content can\'t be empty</string>
+    <string name="ic_menu_close_clear_cancel">Cancel</string>
 </resources>

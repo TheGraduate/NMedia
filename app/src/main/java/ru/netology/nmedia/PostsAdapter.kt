@@ -7,49 +7,34 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.CardPostBinding
 
-typealias OnLikeListener = (post: Post) -> Unit
-typealias OnShareListener = (post: Post) -> Unit
+import android.widget.PopupMenu
 
-/*class PostsAdapter(private val onLikeListener: OnLikeListener) : RecyclerView.Adapter<PostViewHolder>() {
-    var list = emptyList<Post>()
-        set(value) {
-            field = value
-            notifyDataSetChanged()
-        }
+interface OnInteractionListener {
+    fun onLike(post: Post) {}
+    fun onShare(post: Post) {}
+    fun onEdit(post: Post) {}
+    fun onRemove(post: Post) {}
+}
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
-        val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding)
-    }*/
 class PostsAdapter(
-    private val onLikeListener: OnLikeListener,
-    private val OnShareListener: OnShareListener
+    private val onInteractionListener: OnInteractionListener,
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return PostViewHolder(binding, onLikeListener, OnShareListener)
-
+        return PostViewHolder(binding, onInteractionListener)
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
         val post = getItem(position)
         holder.bind(post)
     }
-
-
-   /* override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
-        val post = list[position]
-        holder.bind(post)
-    }*/
-
-    //override fun getItemCount(): Int = list
-
 }
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    private val onLikeListener: OnLikeListener,
-    private val onShareListener: OnShareListener
+    //private val onLikeListener: OnLikeListener,
+    //private val onShareListener: OnShareListener
+    private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
     fun bind(post: Post) {
         binding.apply {
@@ -57,38 +42,45 @@ class PostViewHolder(
             published.text = post.published
             content.text = post.content
 
-
-            if (post.likedByMe) {
-                like.setImageResource(R.drawable.ic_baseline_favorited_24)
-            }
-
             likeCount?.text = calculateParametrs(post.likes)
             shareCount?.text = calculateParametrs(post.shares)
             viewCount?.text = calculateParametrs(post.views)
 
-            like?.setOnClickListener {
-                onLikeListener(post)
-                /*post.likedByMe = !post.likedByMe
-                like.setImageResource(
-                    if (post.likedByMe) {
-                        R.drawable.ic_baseline_favorited_24
-                    } else {
-                        R.drawable.ic_baseline_favorite_24
+            if (post.likedByMe) {
+                like.setImageResource(R.drawable.ic_baseline_favorited_24)
+            } else {
+                like.setImageResource(R.drawable.ic_baseline_favorite_24)
+            }
+
+            menu.setOnClickListener {
+                PopupMenu(it.context, it).apply {
+                    inflate(R.menu.options_post)
+                    setOnMenuItemClickListener { item ->
+                        when (item.itemId) {
+                            R.id.remove -> {
+                                onInteractionListener.onRemove(post)
+                                true
+                            }
+                            R.id.edit -> {
+                                onInteractionListener.onEdit(post)
+                                true
+                            }
+
+                            else -> false
+                        }
                     }
-                )
-                if (post.likedByMe) {
-                    post.likes++
-                } else {
-                    post.likes--
-                }
-                likeCount?.text = calculateParametrs(post.likes)*/
+                }.show()
+            }
+
+            like?.setOnClickListener {
+                //onLikeListener(post)
+                onInteractionListener.onLike(post)
             }
             share?.setOnClickListener {
-                onShareListener(post)
-
-            /*post.shares++
-                shareCount?.text = calculateParametrs(post.shares)*/
+                //onShareListener(post)
+                onInteractionListener.onShare(post)
             }
+
         }
     }
 }
