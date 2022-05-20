@@ -32,20 +32,14 @@ class PostsAdapter(
 
 class PostViewHolder(
     private val binding: CardPostBinding,
-    //private val onLikeListener: OnLikeListener,
-    //private val onShareListener: OnShareListener
     private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
+
     fun bind(post: Post) {
         binding.apply {
             author.text = post.author
             published.text = post.published
             content.text = post.content
-
-           // likeCount?.text = calculateParametrs(post.likes)
-            //shareCount?.text = calculateParametrs(post.shares)
-
-
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
             share.text = "${post.shares}"
@@ -53,12 +47,6 @@ class PostViewHolder(
             like.text = calculateParametrs(post.likes)
             share.text = calculateParametrs(post.shares)
             viewCount?.text = calculateParametrs(post.views)
-
-            /*if (post.likedByMe) {
-                like.setImageResource(R.drawable.ic_baseline_favorited_24)
-            } else {
-                like.setImageResource(R.drawable.ic_baseline_favorite_24)
-            }*/
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -80,15 +68,12 @@ class PostViewHolder(
                 }.show()
             }
 
-            like?.setOnClickListener {
-                //onLikeListener(post)
+            like.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
-            share?.setOnClickListener {
-                //onShareListener(post)
+            share.setOnClickListener {
                 onInteractionListener.onShare(post)
             }
-
         }
     }
 }

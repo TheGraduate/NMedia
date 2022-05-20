@@ -12,11 +12,24 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toTopOf="@id/toolsTop"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/card_post" />
 
-    <androidx.constraintlayout.widget.Barrier
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/card_post"
+    />
+    <!-- app:layout_constraintBottom_toTopOf="@id/toolsTop"-->
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        android:contentDescription="@string/add_post"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_add_24dp" />
+
+   <!-- <androidx.constraintlayout.widget.Barrier
         android:id="@+id/toolsTop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -64,5 +77,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/save"
         tools:src="@android:drawable/ic_menu_close_clear_cancel"
-        tools:visibility="visible" />
+        tools:visibility="visible" />-->
+
 </androidx.constraintlayout.widget.ConstraintLayout>

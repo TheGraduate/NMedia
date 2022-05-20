@@ -34,10 +34,11 @@
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="avatar,published,menu"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        tools:layout_editor_absoluteY="57dp" />
 
     <TextView
         android:id="@+id/content"
@@ -56,10 +57,11 @@
 
     <androidx.constraintlayout.widget.Barrier
         android:id="@+id/footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:barrierDirection="bottom"
         app:constraint_referenced_ids="content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        tools:layout_editor_absoluteY="290dp" />
 
  <!--   <TextView
         android:id="@+id/likeCount"
