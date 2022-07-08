@@ -1,8 +1,12 @@
 package ru.netology.nmedia.repository
 
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import ru.netology.nmedia.MainActivity
 import ru.netology.nmedia.Post
+import java.net.URL
+import java.net.URLEncoder
 
 class PostRepositoryInMemoryImpl : PostRepository {
 
@@ -58,7 +62,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 900,
             shares = 157,
-            views = 530
+            views = 530,
+            video = "https://www.youtube.com/watch?v=VgXqpwQRxs4"
         ),
         Post(
             id = nextId++,
@@ -78,7 +83,8 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likedByMe = false,
             likes = 53,
             shares = 23,
-            views = 140
+            views = 140,
+            video = "https://www.youtube.com/watch?v=VgXqpwQRxs4"
         ),
         Post(
             id = nextId++,
@@ -99,6 +105,17 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 50,
             shares = 170,
             views = 94
+        ),
+        Post(
+            id = nextId++,
+            author = "Нетология. Университет интернет-профессий будущего",
+            content = "top content",
+            published = "9 мая в 16:00",
+            likedByMe = true,
+            likes = 1,
+            shares = 100,
+            views = 100,
+            video = "https://www.youtube.com/watch?v=VgXqpwQRxs4"
         ),
     ).reversed()
 
@@ -147,4 +164,5 @@ class PostRepositoryInMemoryImpl : PostRepository {
         posts = posts.filter { it.id != id }
         data.value = posts
     }
+
 }

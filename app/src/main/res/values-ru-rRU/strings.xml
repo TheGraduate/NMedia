@@ -6,6 +6,7 @@
     <string name="description_post_menu">Меню поста</string>
     <string name="description_post_like">Нравится</string>
     <string name="description_post_share">Поделиться</string>
+    <string name="description_video_button">Воспроизвести видео</string>
     <string name="description_post_save">Сохранить</string>
     <string name="description_post_view">Просмотры</string>
     <string name="menu_edit">Изменить</string>

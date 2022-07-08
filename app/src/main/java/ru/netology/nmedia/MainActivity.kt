@@ -1,11 +1,9 @@
 
-//package ru.netology.nmedia.activity
 package ru.netology.nmedia
 
-/////////
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -13,8 +11,18 @@ import ru.netology.nmedia.activity.EditPostResultContract
 import ru.netology.nmedia.activity.NewPostResultContract
 import ru.netology.nmedia.databinding.ActivityMainBinding
 
+
 class MainActivity : AppCompatActivity() {
+
+    //private var videoPlayer: VideoView? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        fun Int.suka (): Int {
+            return this * this
+        }
+        println (1.suka())
+
 
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,8 +49,14 @@ class MainActivity : AppCompatActivity() {
                     type = "text/plain"
                 }
 
+
                 val shareIntent = Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
+            }
+
+            override fun onPlay(post: Post) {
+                val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(post.video))
+                startActivity(browserIntent)
             }
 
         })

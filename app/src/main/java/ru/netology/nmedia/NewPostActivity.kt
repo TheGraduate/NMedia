@@ -15,7 +15,7 @@ class NewPostActivity : AppCompatActivity() {
         binding.edit.requestFocus()
         binding.ok.setOnClickListener {
             val intent = Intent()
-            if (binding.edit.text.isNullOrBlank()) {
+            if (binding.edit.text.isNullOrBlank()  ) {
                 setResult(Activity.RESULT_CANCELED, intent)
             } else {
                 val content = binding.edit.text.toString()

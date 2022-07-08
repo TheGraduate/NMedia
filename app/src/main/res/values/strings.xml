@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">NMedia!</string>
     <string name="nmedia">NMedia!</string>
-    <!-- <string name="views" >10000</string>-->
     <string name="description_post_like">Like</string>
     <string name="description_post_share">Share</string>
+    <string name="description_video_button">Share</string>
     <string name="description_post_author_avatar">Post author avatar</string>
     <string name="description_post_menu">Post menu</string>
     <string name="description_post_view">Views</string>

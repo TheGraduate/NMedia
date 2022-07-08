@@ -12,7 +12,8 @@ private val empty = Post(
     likedByMe = false,
     likes = 0,
     shares = 0,
-    views = 0
+    views = 0,
+    video = "0"
 )
 
 class PostViewModel : ViewModel() {
@@ -41,4 +42,5 @@ class PostViewModel : ViewModel() {
 
     fun likeById(id: Long) = repository.likeById(id)
     fun removeById(id: Long) = repository.removeById(id)
+
 }

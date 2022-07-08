@@ -1,5 +1,8 @@
 package ru.netology.nmedia
 
+import android.provider.MediaStore
+import java.net.URL
+
 data class Post (
         val id: Long,
         val author: String,
@@ -8,5 +11,7 @@ data class Post (
         var likedByMe: Boolean,
         var likes: Int,
         var shares: Int,
-        var views: Int
+        var views: Int,
+        var video: String? = "0"
+
 )
