@@ -63,7 +63,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 900,
             shares = 157,
             views = 530,
-            video = "https://www.youtube.com/watch?v=VgXqpwQRxs4"
+            video = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         ),
         Post(
             id = nextId++,
@@ -84,7 +84,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 53,
             shares = 23,
             views = 140,
-            video = "https://www.youtube.com/watch?v=VgXqpwQRxs4"
+            video = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         ),
         Post(
             id = nextId++,
@@ -115,7 +115,7 @@ class PostRepositoryInMemoryImpl : PostRepository {
             likes = 1,
             shares = 100,
             views = 100,
-            video = "https://www.youtube.com/watch?v=VgXqpwQRxs4"
+            video = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
         ),
     ).reversed()
 

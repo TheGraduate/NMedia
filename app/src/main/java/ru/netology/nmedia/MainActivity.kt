@@ -13,16 +13,7 @@ import ru.netology.nmedia.databinding.ActivityMainBinding
 
 
 class MainActivity : AppCompatActivity() {
-
-    //private var videoPlayer: VideoView? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        fun Int.suka (): Int {
-            return this * this
-        }
-        println (1.suka())
-
 
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)

@@ -7,7 +7,7 @@ fun calculateParametrs (value: Int): String {
             counter = "${value/1_000_000}" + ".${value % 1_000_000 / 100_000}" + "M"
         }
         value >= 10000 -> {
-            counter = "${value/1000}" + "K"
+             counter = "${value/1000}" + "K"
         }
         value >= 1000 -> {
             counter = "${value/1000}" + ".${value % 1000 / 100}" + "K"
@@ -15,6 +15,7 @@ fun calculateParametrs (value: Int): String {
         value < 1000 -> {
             counter = "$value"
         }
+
     }
     return counter
 }
