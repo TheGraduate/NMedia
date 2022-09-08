@@ -1,10 +1,9 @@
 package ru.netology.nmedia
 
-import android.widget.Toast
+import android.app.Application
 import androidx.lifecycle.*
 import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositoryInMemoryImpl
-
+import ru.netology.nmedia.repository.PostRepositorySharedPrefsImpl
 
 private val empty = Post(
     id = 0,
@@ -18,8 +17,8 @@ private val empty = Post(
     video = "0"
 )
 
-class PostViewModel : ViewModel() {
-    private val repository: PostRepository = PostRepositoryInMemoryImpl()
+class PostViewModel(application: Application) : AndroidViewModel(application) {
+    private val repository: PostRepository = PostRepositorySharedPrefsImpl(application)
     val data = repository.getAll()
     val edited = MutableLiveData(empty)
 

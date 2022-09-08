@@ -1,8 +1,5 @@
 package ru.netology.nmedia
 
-import android.provider.MediaStore
-import java.net.URL
-
 data class Post (
         val id: Long,
         val author: String,
