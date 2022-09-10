@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.activityAndfragments
 
 import android.content.Intent
 import android.net.Uri
@@ -6,13 +6,16 @@ import android.os.Bundle
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import ru.netology.nmedia.activity.EditPostResultContract
-import ru.netology.nmedia.activity.NewPostResultContract
+import ru.netology.nmedia.OnInteractionListener
+import ru.netology.nmedia.Post.Post
+import ru.netology.nmedia.PostsAdapter
+import ru.netology.nmedia.R
+import ru.netology.nmedia.ViewModel.PostViewModel
 import ru.netology.nmedia.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
-
+        
         super.onCreate(savedInstanceState)
         val binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

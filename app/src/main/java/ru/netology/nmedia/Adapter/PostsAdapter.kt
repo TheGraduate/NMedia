@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.CardPostBinding
 
 import android.widget.PopupMenu
+import ru.netology.nmedia.Post.Post
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}

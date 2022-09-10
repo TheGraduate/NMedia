@@ -1,22 +1,19 @@
-package ru.netology.nmedia.activity
+package ru.netology.nmedia.activityAndfragments
 
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.activity.result.contract.ActivityResultContract
-import ru.netology.nmedia.EditPostActivity
 
-class EditPostResultContract: ActivityResultContract<String, String?>() {
+class NewPostResultContract() : ActivityResultContract<Unit, String?>() {
 
-    override fun createIntent(context: Context, input: String): Intent =
-        Intent(context, EditPostActivity()::class.java).apply {
-            putExtra(Intent.EXTRA_TEXT, input)
-        }
+    override fun createIntent(context: Context, input: Unit): Intent =
+        Intent(context, NewPostActivity::class.java)
 
     override fun parseResult(resultCode: Int, intent: Intent?): String? =
         if (resultCode == Activity.RESULT_OK) {
             intent?.getStringExtra(Intent.EXTRA_TEXT)
         } else {
             null
-          }
+        }
 }

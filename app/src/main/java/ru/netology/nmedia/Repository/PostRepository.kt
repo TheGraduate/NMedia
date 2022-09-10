@@ -1,7 +1,7 @@
-package ru.netology.nmedia.repository
+package ru.netology.nmedia.Repository
 
 import androidx.lifecycle.LiveData
-import ru.netology.nmedia.Post
+import ru.netology.nmedia.Post.Post
 
 interface PostRepository {
     fun getAll(): LiveData<List<Post>>

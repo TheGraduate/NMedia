@@ -11,7 +11,7 @@
         android:theme="@style/Theme.NMedia">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activityAndfragments.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.IntentHandlerActivity"
+            android:name=".activityAndfragments.IntentHandlerActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
@@ -32,10 +32,10 @@
         </activity>
 
         <activity
-            android:name=".activity.NewPostActivity"
+            android:name=".activityAndfragments.NewPostActivity"
             android:exported="false" />
         <activity
-            android:name=".EditPostActivity"
+            android:name=".activityAndfragments.EditPostActivity"
             android:exported="false" />
     </application>
 

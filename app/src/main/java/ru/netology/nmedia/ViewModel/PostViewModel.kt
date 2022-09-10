@@ -1,9 +1,10 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.ViewModel
 
 import android.app.Application
 import androidx.lifecycle.*
-import ru.netology.nmedia.repository.PostRepository
-import ru.netology.nmedia.repository.PostRepositorySharedPrefsImpl
+import ru.netology.nmedia.Post.Post
+import ru.netology.nmedia.Repository.PostRepository
+import ru.netology.nmedia.Repository.PostRepositorySharedPrefsImpl
 
 private val empty = Post(
     id = 0,
