@@ -11,17 +11,9 @@
         android:theme="@style/Theme.NMedia">
 
         <activity
-            android:name=".activityAndfragments.MainActivity"
+            android:name=".activityAndfragments.AppActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".activityAndfragments.IntentHandlerActivity"
-            android:exported="true">
+            <nav-graph android:value="@navigation/nav_main" />
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
@@ -29,14 +21,15 @@
 
                 <data android:mimeType="text/plain" />
             </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+
+            </intent-filter>
         </activity>
 
-        <activity
-            android:name=".activityAndfragments.NewPostActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activityAndfragments.EditPostActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

@@ -1,3 +1,4 @@
+/*
 package ru.netology.nmedia.Repository
 
 import android.content.Context
@@ -75,4 +76,4 @@ class PostRepositoryFileImpl(
             it.write(gson.toJson(posts))
         }
     }
-}
+}*/

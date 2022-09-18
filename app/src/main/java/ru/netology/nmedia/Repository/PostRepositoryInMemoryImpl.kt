@@ -1,3 +1,4 @@
+/*
 package ru.netology.nmedia.Repository
 
 import androidx.lifecycle.LiveData
@@ -161,4 +162,4 @@ class PostRepositoryInMemoryImpl : PostRepository {
         data.value = posts
     }
 
-}
+}*/
