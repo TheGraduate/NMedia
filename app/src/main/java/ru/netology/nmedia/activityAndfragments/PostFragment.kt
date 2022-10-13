@@ -1,44 +1,56 @@
 package ru.netology.nmedia.activityAndfragments
 
 import android.content.Intent
-import android.content.Intent.EXTRA_ALLOW_MULTIPLE
-import android.content.Intent.EXTRA_TEXT
 import android.net.Uri
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import kotlinx.android.synthetic.main.card_post.*
-//import kotlinx.android.synthetic.main.fragment_post.*
-//import kotlinx.android.synthetic.main.fragment_post.content
+import androidx.navigation.fragment.navArgs
+import kotlinx.android.synthetic.main.fragment_post.*
 import ru.netology.nmedia.OnInteractionListener
 import ru.netology.nmedia.Post.Post
-import ru.netology.nmedia.PostsAdapter
+import ru.netology.nmedia.PostViewHolder
 import ru.netology.nmedia.R
 import ru.netology.nmedia.ViewModel.PostViewModel
-//import ru.netology.nmedia.activityAndfragments.PostFragment.Companion.idArg
+import ru.netology.nmedia.databinding.ActivityAppBinding.inflate
 import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.databinding.FragmentPostBinding
 
-class FeedFragment : Fragment() {
+/*
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+*/
 
+
+class PostFragment : Fragment() {
+
+  /*  private var param1: String? = null
+    private var param2: String? = null
+*/
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
 
-    override fun onCreateView (
-        inflater: LayoutInflater,
-        container: ViewGroup?,
+    val args by navArgs<PostFragmentArgs>()
+
+  /*  override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+    }*/
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) : View {
-        val binding = FragmentFeedBinding.inflate(
-            inflater,
-            container,
-            false
-        )
-        val adapter = PostsAdapter (object : OnInteractionListener {
+    ): View? {
+        val binding = FragmentPostBinding.inflate(inflater, container, false)
+        val viewHolder = PostViewHolder(binding.cardPost, object : OnInteractionListener {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
@@ -55,7 +67,7 @@ class FeedFragment : Fragment() {
             override fun onShare(post: Post) {
                 val intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(EXTRA_TEXT, post.content)
+                    putExtra(Intent.EXTRA_TEXT, post.content)
                     type = "text/plain"
                 }
 
@@ -69,20 +81,14 @@ class FeedFragment : Fragment() {
                 startActivity(browserIntent)
             }
 
-            override fun onPost(post: Post) {
-                val action = FeedFragmentDirections.actionFeedFragmentToPostFragment(post.id.toInt())
-                findNavController().navigate(action)
-            }
-
         })
 
-        binding.list.adapter = adapter
         viewModel.data.observe(viewLifecycleOwner) { posts ->
-            adapter.submitList(posts)
-        }
-
-        binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            val post = posts.find { it.id == args.postId.toLong() } ?: run {
+                findNavController().navigateUp()
+                return@observe
+            }
+            viewHolder.bind(post)
         }
 
         viewModel.edited.observe(viewLifecycleOwner) {
@@ -91,12 +97,23 @@ class FeedFragment : Fragment() {
             }
 
             val sendPostText = Bundle()
-            sendPostText.putString(EXTRA_TEXT, it.content)
+            sendPostText.putString(Intent.EXTRA_TEXT, it.content)
 
-            findNavController().navigate(R.id.action_feedFragment_to_editPostFragment, sendPostText)
+            findNavController().navigate(R.id.action_postFragment_to_editPostFragment, sendPostText)
         }
 
         return binding.root
     }
 
+   /* companion object {
+
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            PostFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }*/
 }
