@@ -17,7 +17,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_SHARES} INTEGER NOT NULL DEFAULT 0,
-            ${PostColumns.COLUMN_VIEWS} INTEGER NOT NULL DEFAULT 0
+            ${PostColumns.COLUMN_VIEWS} INTEGER NOT NULL DEFAULT 0,
+            ${PostColumns.COLUMN_VIDEO} INTEGER NOT NULL DEFAULT 0
            
         );
         """.trimIndent()
@@ -33,7 +34,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         const val COLUMN_LIKES = "likes"
         const val COLUMN_SHARES = "shares"
         const val COLUMN_VIEWS = "views"
-       // const val COLUMN_VIDEO = "video"
+        const val COLUMN_VIDEO = "video"
         val ALL_COLUMNS = arrayOf(
             COLUMN_ID,
             COLUMN_AUTHOR,
@@ -43,7 +44,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             COLUMN_LIKES,
             COLUMN_SHARES,
             COLUMN_VIEWS,
-          //  COLUMN_VIDEO
+            COLUMN_VIDEO
         )
     }
 
@@ -116,6 +117,16 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         )
     }
 
+    override fun repostById(id: Long) {
+        db.execSQL(
+            """
+           UPDATE posts SET
+               shares = shares + 1
+           WHERE id = ?;
+        """.trimIndent(), arrayOf(id)
+        )
+    }
+
     private fun map(cursor: Cursor): Post {
         with(cursor) {
             return Post(
@@ -126,8 +137,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
                 likes = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKES)),
                 shares = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_SHARES)),
-                views = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIEWS))
-                //video = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIDEO)).toString()//todo
+                views = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIEWS)),
+                video = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIDEO)).toString()
             )
         }
     }

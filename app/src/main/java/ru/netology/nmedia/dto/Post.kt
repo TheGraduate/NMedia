@@ -10,5 +10,4 @@ data class Post (
         var shares: Int,
         var views: Int,
         var video: String? = "0"
-
 )

@@ -14,10 +14,6 @@ import ru.netology.nmedia.databinding.FragmentEditPostBinding
 
 class EditPostFragment: Fragment() {
 
-   /* companion object {
-        var Bundle.textArg: String? by StringArg
-    }*/
-
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )

@@ -56,10 +56,9 @@ class FeedFragment : Fragment() {
                     putExtra(EXTRA_TEXT, post.content)
                     type = "text/plain"
                 }
-
-
                 val shareIntent = Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
+                viewModel.repostById(post.id)
             }
 
             override fun onPlay(post: Post) {

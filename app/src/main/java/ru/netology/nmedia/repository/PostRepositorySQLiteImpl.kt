@@ -47,5 +47,14 @@ class PostRepositorySQLiteImpl(
         posts = posts.filter { it.id != id }
         data.value = posts
     }
+
+    override fun repostById(id: Long) {
+        posts = posts.map {
+            if (it.id != id) it else it.copy(
+               shares = it.shares++
+            )
+        }
+        data.value = posts
+    }
 }
 
