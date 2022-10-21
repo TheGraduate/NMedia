@@ -1,12 +1,13 @@
-package ru.netology.nmedia.Repository
+package ru.netology.nmedia.repository
 
 import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import ru.netology.nmedia.Post.Post
+import ru.netology.nmedia.dto.Post
 
+/*
 class PostRepositorySharedPrefsImpl(
     context: Context,
 ) : PostRepository {
@@ -70,4 +71,4 @@ class PostRepositorySharedPrefsImpl(
             apply()
         }
     }
-}
+}*/

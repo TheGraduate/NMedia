@@ -1,4 +1,4 @@
-package ru.netology.nmedia.Utils
+package ru.netology.nmedia.utils
 
 import android.content.Context
 import android.view.View

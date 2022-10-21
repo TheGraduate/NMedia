@@ -1,4 +1,4 @@
-package ru.netology.nmedia.activityAndfragments
+package ru.netology.nmedia.activity
 
 import android.content.Intent
 import android.net.Uri
@@ -10,14 +10,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import kotlinx.android.synthetic.main.fragment_post.*
 import ru.netology.nmedia.OnInteractionListener
-import ru.netology.nmedia.Post.Post
+import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.PostViewHolder
 import ru.netology.nmedia.R
-import ru.netology.nmedia.ViewModel.PostViewModel
-import ru.netology.nmedia.databinding.ActivityAppBinding.inflate
-import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.viewModel.PostViewModel
 import ru.netology.nmedia.databinding.FragmentPostBinding
 
 /*
