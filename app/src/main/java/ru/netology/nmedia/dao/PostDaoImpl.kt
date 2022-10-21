@@ -15,8 +15,8 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             ${PostColumns.COLUMN_CONTENT} TEXT NOT NULL,
             ${PostColumns.COLUMN_PUBLISHED} TEXT NOT NULL,
             ${PostColumns.COLUMN_LIKED_BY_ME} BOOLEAN NOT NULL DEFAULT 0,
-            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0
-            ${PostColumns.COLUMN_SHARES} INTEGER NOT NULL DEFAULT 0
+            ${PostColumns.COLUMN_LIKES} INTEGER NOT NULL DEFAULT 0,
+            ${PostColumns.COLUMN_SHARES} INTEGER NOT NULL DEFAULT 0,
             ${PostColumns.COLUMN_VIEWS} INTEGER NOT NULL DEFAULT 0
            
         );
@@ -126,7 +126,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
                 likedByMe = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKED_BY_ME)) != 0,
                 likes = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_LIKES)),
                 shares = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_SHARES)),
-                views = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIEWS)),
+                views = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIEWS))
                 //video = getInt(getColumnIndexOrThrow(PostColumns.COLUMN_VIDEO)).toString()//todo
             )
         }
