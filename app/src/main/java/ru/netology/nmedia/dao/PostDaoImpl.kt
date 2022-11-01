@@ -1,9 +1,12 @@
+/*
 package ru.netology.nmedia.dao
 
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import androidx.lifecycle.LiveData
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.entity.PostEntity
 
 
 class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
@@ -48,7 +51,7 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
         )
     }
 
-    override fun getAll(): List<Post> {
+    override fun getAll(): LiveData<List<PostEntity>> {
         val posts = mutableListOf<Post>()
         db.query(
             PostColumns.TABLE,
@@ -64,6 +67,14 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             }
         }
         return posts
+    }
+
+    override fun insert(post: PostEntity) {
+
+    }
+
+    override fun updateContentById(id: Long, content: String) {
+
     }
 
     override fun save(post: Post): Post {
@@ -142,4 +153,4 @@ class PostDaoImpl(private val db: SQLiteDatabase) : PostDao {
             )
         }
     }
-}
+}*/

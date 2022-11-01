@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dto.Post
 
+/*
 class PostRepositorySQLiteImpl(
     private val dao: PostDao
 ) : PostRepository {
@@ -57,4 +58,5 @@ class PostRepositorySQLiteImpl(
         data.value = posts
     }
 }
+*/
 
