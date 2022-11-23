@@ -16,4 +16,11 @@
     <string name="add_post">Добавить пост</string>
     <string name="ic_menu_close_clear_cancel">Отмена</string>
     <string name="error_empty_content">Контент не может быть пустым</string>
+    <string name="google_play_unavailable">Google API недоступен</string>
+    <string name="notification_user_liked">Пользователю %1$s понравилась запись %2$s\</string>
+    <string name="channel_remote_name">Уведомления сервера</string>
+    <string name="channel_remote_description">Уведомления с удаленного сервера</string>
+    <string name="notification_user_share">Пользователь %1$s поделился записью %2$s\</string>
+    <string name="notification_user_newpost">%1$s опубликовал новый пост</string>
+
 </resources>
