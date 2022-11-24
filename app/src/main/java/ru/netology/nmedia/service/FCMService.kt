@@ -12,7 +12,6 @@ import com.google.gson.Gson
 import ru.netology.nmedia.R
 import kotlin.random.Random
 
-
     class FCMService : FirebaseMessagingService() {
         private val action = "action"
         private val content = "content"
@@ -36,12 +35,16 @@ import kotlin.random.Random
         override fun onMessageReceived(message: RemoteMessage) {
 
             print(Gson().toJson(message))
-            message.data[action]?.let {
-                when (Action.valueOf(it)) {
-                    Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
-                    Action.SHARE -> handleShare(gson.fromJson(message.data[content], Share::class.java))
-                    Action.NEW_POST -> handleNewPost(gson.fromJson(message.data[content], NewPost::class.java))
+            try {
+                message.data[action]?.let {
+                    when (Action.valueOf(it)) {
+                        Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+                        Action.SHARE -> handleShare(gson.fromJson(message.data[content], Share::class.java))
+                        Action.NEW_POST -> handleNewPost(gson.fromJson(message.data[content], NewPost::class.java))
+                    }
                 }
+            } catch (e : IllegalArgumentException) {
+                println(e.message)
             }
         }
 
@@ -86,6 +89,9 @@ import kotlin.random.Random
         }
 
         private fun handleNewPost(content: NewPost) {
+            val bigTextForNotification = "ДАННОЕ СООБЩЕНИЕ (МАТЕРИАЛ) СОЗДАНО И (ИЛИ) " +
+                    "РАСПРОСТРАНЕНО ИНОСТРАННЫМ СРЕДСТВОМ МАССОВОЙ ИНФОРМАЦИИ, " +
+                    "ВЫПОЛНЯЮЩИМ ФУНКЦИИ ИНОСТРАННОГО АГЕНТА"
             val notification = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setContentTitle(
@@ -94,7 +100,9 @@ import kotlin.random.Random
                         content.userName
                     )
                 )
-                .setContentText("Текст поста")
+                .setContentText(bigTextForNotification)
+                .setStyle(NotificationCompat.BigTextStyle()
+                    .bigText(bigTextForNotification))
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
