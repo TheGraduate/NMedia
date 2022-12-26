@@ -37,11 +37,13 @@
     <fragment
         android:id="@+id/editPostFragment"
         android:name="ru.netology.nmedia.activity.EditPostFragment"
-        android:label="EditPostFragment" />
+        android:label="EditPostFragment"
+        tools:layout="@layout/fragment_edit_post" />
     <fragment
         android:id="@+id/postFragment"
         android:name="ru.netology.nmedia.activity.PostFragment"
-        android:label="PostFragment" >
+        android:label="PostFragment"
+        tools:layout="@layout/fragment_post" >
         <action
             android:id="@+id/action_postFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
