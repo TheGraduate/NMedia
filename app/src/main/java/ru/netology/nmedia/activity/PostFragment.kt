@@ -1,4 +1,3 @@
-
 package ru.netology.nmedia.activity
 
 import android.content.Intent
@@ -63,13 +62,13 @@ class PostFragment : Fragment() {
 
         })
 
-       /* viewModel.data.observe(viewLifecycleOwner) { posts ->
-            val post = posts.find { it.id == args.postId.toLong() } ?: run {
+        viewModel.data.observe(viewLifecycleOwner) { posts ->
+            val post = posts.posts.find { it.id == args.postId.toLong() } ?: run {
                 findNavController().navigateUp()
                 return@observe
             }
             viewHolder.bind(post)
-        }     */  //todo вроде это возможность вернуться с конкретного поста на список постов
+        }
 
         viewModel.edited.observe(viewLifecycleOwner) {
             if (it.id == 0L) {

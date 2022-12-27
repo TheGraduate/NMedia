@@ -1,18 +1,13 @@
 package ru.netology.nmedia.viewModel
 
-
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import ru.netology.nmedia.repository.PostRepository
-//import ru.netology.nmedia.repository.*
-
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.utils.SingleLiveEvent
-//import ru.netology.nmedia.db.AppDb
 import ru.netology.nmedia.model.FeedModel
-//import ru.netology.nmedia.repository.*
 import ru.netology.nmedia.repository.PostRepositoryImpl
 import java.io.IOException
 import kotlin.concurrent.thread
@@ -32,7 +27,7 @@ private val empty = Post(
 class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     /*private val repository: PostRepository = PostRepositoryImpl(
-        AppDb.getInstance(context = application).postDao() // todo
+        AppDb.getInstance(context = application).postDao()
     )*/
     private val repository: PostRepository = PostRepositoryImpl()
     private val _data = MutableLiveData(FeedModel())
@@ -90,7 +85,6 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
 
     fun removeById(id: Long) {
         thread {
-            // Оптимистичная модель
             val old = _data.value?.posts.orEmpty()
             _data.postValue(
                 _data.value?.copy(posts = _data.value?.posts.orEmpty()

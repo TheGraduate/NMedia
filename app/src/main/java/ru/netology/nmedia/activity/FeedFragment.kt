@@ -9,10 +9,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
-//import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import ru.netology.nmedia.OnInteractionListener
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.PostsAdapter
@@ -22,7 +21,7 @@ import ru.netology.nmedia.databinding.FragmentFeedBinding
 
 class FeedFragment : Fragment() {
 
-    //private val viewModel: PostViewModel by activityViewModels() // todo
+    //private val viewModel: PostViewModel by activityViewModels()
     private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )
@@ -31,12 +30,15 @@ class FeedFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
+
     ) : View {
         val binding = FragmentFeedBinding.inflate(
             inflater,
             container,
             false
+
         )
+
         val adapter = PostsAdapter (object : OnInteractionListener {
 
             override fun onEdit(post: Post) {
@@ -68,14 +70,9 @@ class FeedFragment : Fragment() {
             }
 
             override fun onPost(post: Post) {
-                val action = FeedFragmentDirections.actionFeedFragmentToNewPostFragment()
-            // todo проблема с переходом на конкретный пост
-                //val action2 = FeedFragmentDirections.actionFeedFragmentToPostFragment()
+                val action = FeedFragmentDirections.actionFeedFragmentToPostFragment(post.id.toInt())
                 findNavController().navigate(action)
-
-                //findNavController().navigate(R.id.action_feedFragment_to_postFragment)
             }
-
         })
 
         binding.list.adapter = adapter
@@ -87,6 +84,10 @@ class FeedFragment : Fragment() {
         }
 
         binding.retryButton.setOnClickListener {
+            viewModel.loadPosts()
+        }
+
+        SwipeRefreshLayout.OnRefreshListener {
             viewModel.loadPosts()
         }
 

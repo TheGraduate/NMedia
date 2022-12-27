@@ -47,7 +47,7 @@ class PostViewHolder(
             like.text = "${post.likes}"
             share.text = "${post.shares}"
 
-            if (post.video.toString() == "0") {
+            if (post.video == "0") {
                 videoScreen.visibility = View.GONE
                 playButton.visibility = View.GONE
 
@@ -96,7 +96,6 @@ class PostViewHolder(
             videoScreen.setOnClickListener{
                 onInteractionListener.onPlay(post)
             }
-
         }
     }
 }

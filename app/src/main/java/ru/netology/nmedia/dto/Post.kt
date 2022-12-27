@@ -9,5 +9,5 @@ data class Post (
         var likes: Int,
         var shares: Int,
         var views: Int,
-        var video: String? = "0"
+        var video: String = "0"
 )
