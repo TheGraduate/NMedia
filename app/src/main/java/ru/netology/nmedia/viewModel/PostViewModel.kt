@@ -54,9 +54,22 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
+  /*  fun loadPosts() {
+        _data.value = FeedModel(loading = true)
+        repository.getAllAsync(object : PostRepository.Callback<List<Post>> {
+            override fun onSuccess(posts: List<Post>) {
+                _data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
+        })
+    }*/
+
     fun save() {
         edited.value?.let {
-            thread {
+            thread {// TODO
                 repository.save(it)
                 _postCreated.postValue(Unit)
             }
@@ -77,12 +90,28 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun likeById(id: Long) {
-        thread { repository.likeById(id) }
+        thread {// repository.likeById(id)
+
+            val likedPost = repository.likeById(id)
+            _data.postValue(
+                _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                    .map { if (it.id == id) likedPost else it }
+                )
+            )
+        }
+
     }
 
-    /*fun unlikeById(id: Long) {
-        thread { repository.unlikeById(id) }
-    }*/
+    fun unlikeById(id: Long) {
+        thread { //repository.unlikeById(id)
+            val unlikedPost = repository.unlikeById(id)
+            _data.postValue(
+                _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                    .map { if (it.id == id) unlikedPost else it }
+                )
+            )
+        }
+    }
 
     fun removeById(id: Long) {
         thread {
@@ -100,5 +129,15 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-    fun repostById(id: Long) = repository.repostById(id)
+    fun repostById(id: Long)// = repository.repostById(id)
+    {
+        thread {
+            val repostPost = repository.repostById(id)
+            _data.postValue(
+                _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                    .map { if (it.id == id) repostPost else it }
+                )
+            )
+        }
+    }
 }

@@ -39,14 +39,23 @@ class FeedFragment : Fragment() {
 
         )
 
+
         val adapter = PostsAdapter (object : OnInteractionListener {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
 
-            override fun onLike(post: Post) {
+           /* override fun onLike(post: Post) {
                 viewModel.likeById(post.id)
+            }*/
+
+            override fun onLike(post: Post) {
+                if (post.likedByMe) {
+                    viewModel.unlikeById(post.id)
+                } else {
+                    viewModel.likeById(post.id)
+                }
             }
 
             override fun onRemove(post: Post) {
@@ -89,6 +98,7 @@ class FeedFragment : Fragment() {
 
         SwipeRefreshLayout.OnRefreshListener {
             viewModel.loadPosts()
+            binding.swipe.isRefreshing = false
         }
 
         binding.fab.setOnClickListener {
