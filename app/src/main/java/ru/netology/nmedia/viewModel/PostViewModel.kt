@@ -42,7 +42,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         loadPosts()
     }
 
-    fun loadPosts() {
+   /* fun loadPosts() {
         thread {
             _data.postValue(FeedModel(loading = true))
             try {
@@ -52,9 +52,9 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 FeedModel(error = true)
             }.also(_data::postValue)
         }
-    }
+    }*/
 
-  /*  fun loadPosts() {
+    fun loadPosts() {
         _data.value = FeedModel(loading = true)
         repository.getAllAsync(object : PostRepository.Callback<List<Post>> {
             override fun onSuccess(posts: List<Post>) {
@@ -65,17 +65,34 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 _data.postValue(FeedModel(error = true))
             }
         })
-    }*/
+    }
 
     fun save() {
-        edited.value?.let {
-            thread {// TODO
+        /*edited.value?.let {
+            thread {
                 repository.save(it)
                 _postCreated.postValue(Unit)
             }
         }
-        edited.value = empty
+        edited.value = empty*/
+
+        edited.value?.let{
+
+            repository.save(it, object : PostRepository.Callback<Post> {
+                override fun onSuccess(posts: Post) {
+                    //_data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
+                    _postCreated.postValue(Unit)
+                }
+
+                override fun onError(e: Exception) {
+                    _data.postValue(FeedModel(error = true))
+                }
+            })
+        }
     }
+
+
+
 
     fun edit(post: Post) {
         edited.value = post
@@ -90,31 +107,62 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun likeById(id: Long) {
-        thread {// repository.likeById(id)
-
+       /* thread {// repository.likeById(id)
+            //TODO("NOT YET IMPLEMENTED")
             val likedPost = repository.likeById(id)
             _data.postValue(
                 _data.value?.copy(posts = _data.value?.posts.orEmpty()
                     .map { if (it.id == id) likedPost else it }
                 )
             )
+        }*/
+        repository.likeAsync(id, object : PostRepository.Callback<Post>{
+            override fun onSuccess(post: Post) {
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map { if (it.id == id) post else it }
+                    )
+                )
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
         }
+        )
 
     }
 
     fun unlikeById(id: Long) {
-        thread { //repository.unlikeById(id)
+        /*thread { //repository.unlikeById(id)
+            //TODO("NOT YET IMPLEMENTED")
             val unlikedPost = repository.unlikeById(id)
             _data.postValue(
                 _data.value?.copy(posts = _data.value?.posts.orEmpty()
                     .map { if (it.id == id) unlikedPost else it }
                 )
             )
+        }*/
+        repository.likeAsync(id, object : PostRepository.Callback<Post>{
+            override fun onSuccess(post: Post) {
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map { if (it.id == id) post else it }
+                    )
+                )
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
         }
+        )
+
+
     }
 
     fun removeById(id: Long) {
-        thread {
+        /*thread {
             val old = _data.value?.posts.orEmpty()
             _data.postValue(
                 _data.value?.copy(posts = _data.value?.posts.orEmpty()
@@ -122,22 +170,61 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
             try {
-                repository.removeById(id)
+                //TODO("NOT YET IMPLEMENTED")
+                //repository.removeById(id)
             } catch (e: IOException) {
                 _data.postValue(_data.value?.copy(posts = old))
             }
+        }*/
+        val old = _data.value?.posts.orEmpty()
+        _data.postValue(
+            _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                .filter { it.id != id }
+            )
+        )
+
+        repository.removeAsync(id, object: PostRepository.Callback<Post> {
+            override fun onSuccess(post: Post) {
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map { if (it.id == id) post else it }
+                    )
+                )
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(_data.value?.copy(posts = old))
+            }
         }
+        )
+
     }
 
     fun repostById(id: Long)// = repository.repostById(id)
     {
-        thread {
-            val repostPost = repository.repostById(id)
+        /*thread {
+            //TODO("NOT YET IMPLEMENTED")
+            //val repostPost = repository.repostById(id)
             _data.postValue(
                 _data.value?.copy(posts = _data.value?.posts.orEmpty()
-                    .map { if (it.id == id) repostPost else it }
+                    //.map { if (it.id == id) repostPost else it }
                 )
             )
+        }*/
+
+        repository.repostAsync(id, object: PostRepository.Callback<Post>{
+            override fun onSuccess(post: Post) {
+                _data.postValue(
+                    _data.value?.copy(posts = _data.value?.posts.orEmpty()
+                        .map { if (it.id == id) post else it }
+                    )
+                )
+            }
+
+            override fun onError(e: Exception) {
+                _data.postValue(FeedModel(error = true))
+            }
         }
+        )
     }
 }
