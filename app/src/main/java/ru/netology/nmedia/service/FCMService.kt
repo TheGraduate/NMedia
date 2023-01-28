@@ -1,9 +1,12 @@
 package ru.netology.nmedia.service
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.pm.PackageManager
 import android.os.Build
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
@@ -31,6 +34,7 @@ import kotlin.random.Random
                 manager.createNotificationChannel(channel)
             }
         }
+
 
         override fun onMessageReceived(message: RemoteMessage) {
 
@@ -66,6 +70,13 @@ import kotlin.random.Random
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
             NotificationManagerCompat.from(this)
                 .notify(Random.nextInt(100_000), notification)
         }
@@ -84,6 +95,13 @@ import kotlin.random.Random
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
             NotificationManagerCompat.from(this)
                 .notify(Random.nextInt(100_000), notification)
         }
@@ -106,6 +124,13 @@ import kotlin.random.Random
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
+            if (ActivityCompat.checkSelfPermission(
+                    this,
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                return
+            }
             NotificationManagerCompat.from(this)
                 .notify(Random.nextInt(100_000), notification)
         }

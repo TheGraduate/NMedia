@@ -1,4 +1,4 @@
-package ru.netology.nmedia
+package ru.netology.nmedia.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +8,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.CardPostBinding
 import android.widget.PopupMenu
+import com.bumptech.glide.Glide
+import ru.netology.nmedia.R
+import ru.netology.nmedia.calculateParametrs
 import ru.netology.nmedia.dto.Post
 
 interface OnInteractionListener {
@@ -37,6 +40,7 @@ class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener
 ) : RecyclerView.ViewHolder(binding.root) {
+
 
     fun bind(post: Post) {
         binding.apply {
@@ -96,6 +100,16 @@ class PostViewHolder(
             videoScreen.setOnClickListener{
                 onInteractionListener.onPlay(post)
             }
+
+            val url = "http://10.0.2.2:9999/avatars/{name}"
+            Glide.with(binding.avatar)
+                .load(url)
+                .circleCrop()
+                .placeholder(R.drawable.ic_loading_100dp)
+                .error(R.drawable.ic_error_100dp)
+                .timeout(10_000)
+                .into(binding.avatar)
+
         }
     }
 }

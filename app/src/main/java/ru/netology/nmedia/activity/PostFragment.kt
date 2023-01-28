@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import ru.netology.nmedia.OnInteractionListener
+import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.PostViewHolder
+import ru.netology.nmedia.adapter.PostViewHolder
 import ru.netology.nmedia.R
 import ru.netology.nmedia.viewModel.PostViewModel
 import ru.netology.nmedia.databinding.FragmentPostBinding
@@ -29,7 +29,10 @@ class PostFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentPostBinding.inflate(inflater, container, false)
+
+
         val viewHolder = PostViewHolder(binding.cardPost, object : OnInteractionListener {
+
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
