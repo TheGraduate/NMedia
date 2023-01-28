@@ -9,8 +9,6 @@ import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.utils.SingleLiveEvent
 import ru.netology.nmedia.model.FeedModel
 import ru.netology.nmedia.repository.PostRepositoryImpl
-import java.io.IOException
-import kotlin.concurrent.thread
 
 private val empty = Post(
     id = 0,
@@ -79,6 +77,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         edited.value?.let{
 
             repository.save(it, object : PostRepository.Callback<Post> {
+
                 override fun onSuccess(posts: Post) {
                     //_data.postValue(FeedModel(posts = posts, empty = posts.isEmpty()))
                     _postCreated.postValue(Unit)
@@ -89,6 +88,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 }
             })
         }
+        edited.value = empty
     }
 
 
@@ -183,11 +183,12 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             )
         )
 
-        repository.removeAsync(id, object: PostRepository.Callback<Post> {
-            override fun onSuccess(post: Post) {
+        repository.removeAsync(id, object: PostRepository.Callback<Unit> {
+
+            override fun onSuccess(post: Unit) {
                 _data.postValue(
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
-                        .map { if (it.id == id) post else it }
+                        .map { if (it.id == id) post as Post else it }
                     )
                 )
             }

@@ -87,7 +87,7 @@ class PostRepositoryImpl: PostRepository {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        callback.onSuccess(gson.fromJson(body, Post::class.java))
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
@@ -131,7 +131,7 @@ class PostRepositoryImpl: PostRepository {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        callback.onSuccess(gson.fromJson(body, Post::class.java))
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
@@ -168,7 +168,7 @@ class PostRepositoryImpl: PostRepository {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        callback.onSuccess(gson.fromJson(body, Post::class.java))
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
@@ -190,7 +190,7 @@ class PostRepositoryImpl: PostRepository {
             .execute()
             .close()
     }*/
-    override fun removeAsync(id: Long, callback: PostRepository.Callback<Post>) {
+    override fun removeAsync(id: Long, callback: PostRepository.Callback<Unit>) {
         //TODO("Not yet implemented")
         val request: Request = Request.Builder()
             .delete()
@@ -200,9 +200,10 @@ class PostRepositoryImpl: PostRepository {
         client.newCall(request)
             .enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
-                    val body = response.body?.string() ?: throw RuntimeException("body is null")
+                   // val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        //callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        callback.onSuccess(Unit)
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
@@ -240,7 +241,7 @@ class PostRepositoryImpl: PostRepository {
                 override fun onResponse(call: Call, response: Response) {
                     val body = response.body?.string() ?: throw RuntimeException("body is null")
                     try {
-                        callback.onSuccess(gson.fromJson(body, typeToken.type))
+                        callback.onSuccess(gson.fromJson(body, Post::class.java))
                     } catch (e: Exception) {
                         callback.onError(e)
                     }
