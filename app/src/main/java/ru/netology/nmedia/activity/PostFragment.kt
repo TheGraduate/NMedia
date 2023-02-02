@@ -22,12 +22,12 @@ class PostFragment : Fragment() {
         ownerProducer = ::requireParentFragment
     )
 
-    val args by navArgs<PostFragmentArgs>()
+    private val args by navArgs<PostFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val binding = FragmentPostBinding.inflate(inflater, container, false)
 
 

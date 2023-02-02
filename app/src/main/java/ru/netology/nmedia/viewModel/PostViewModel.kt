@@ -116,7 +116,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
         }*/
-        repository.likeAsync(id, object : PostRepository.Callback<Post>{
+        repository.likeById(id, object : PostRepository.Callback<Post>{
             override fun onSuccess(post: Post) {
                 _data.postValue(
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
@@ -143,7 +143,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
                 )
             )
         }*/
-        repository.likeAsync(id, object : PostRepository.Callback<Post>{
+        repository.unlikeById(id, object : PostRepository.Callback<Post>{
             override fun onSuccess(post: Post) {
                 _data.postValue(
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
@@ -183,14 +183,14 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             )
         )
 
-        repository.removeAsync(id, object: PostRepository.Callback<Unit> {
+        repository.removeById(id, object: PostRepository.Callback<Unit> {
 
             override fun onSuccess(post: Unit) {
-                _data.postValue(
+                /*_data.postValue(
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
                         .map { if (it.id == id) post as Post else it }
                     )
-                )
+                )*/
             }
 
             override fun onError(e: Exception) {
@@ -213,7 +213,7 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
             )
         }*/
 
-        repository.repostAsync(id, object: PostRepository.Callback<Post>{
+        repository.repostById(id, object: PostRepository.Callback<Post>{
             override fun onSuccess(post: Post) {
                 _data.postValue(
                     _data.value?.copy(posts = _data.value?.posts.orEmpty()
