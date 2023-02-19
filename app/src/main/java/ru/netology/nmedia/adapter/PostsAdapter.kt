@@ -9,16 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.databinding.CardPostBinding
 import android.widget.PopupMenu
 import com.bumptech.glide.Glide
+import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.calculateParametrs
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.view.loadCircleCrop
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
-    fun onPlay(post: Post) {}
     fun onShare(post: Post) {}
     fun onEdit(post: Post) {}
     fun onRemove(post: Post) {}
+    fun onPlay(post: Post) {}
     fun onPost(post: Post) {}
 }
 
@@ -47,9 +49,13 @@ class PostViewHolder(
             author.text = post.author
             published.text = post.published
             content.text = post.content
+            avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
             share.text = "${post.shares}"
+            like.text = calculateParametrs(post.likes)
+            share.text = calculateParametrs(post.shares)
+            viewCount.text = calculateParametrs(post.views)
 
             if (post.video == "0") {
                 videoScreen.visibility = View.GONE
@@ -60,9 +66,6 @@ class PostViewHolder(
                 playButton.visibility = View.VISIBLE
             }
 
-            like.text = calculateParametrs(post.likes)
-            share.text = calculateParametrs(post.shares)
-            viewCount.text = calculateParametrs(post.views)
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -101,7 +104,7 @@ class PostViewHolder(
                 onInteractionListener.onPlay(post)
             }
 
-            val url = "http://10.0.2.2:9999/avatars/{name}"
+            val url = "http://10.0.2.2:9999/static/avatars/{name}"
             Glide.with(binding.avatar)
                 .load(url)
                 .circleCrop()
@@ -109,7 +112,6 @@ class PostViewHolder(
                 .error(R.drawable.ic_error_100dp)
                 .timeout(10_000)
                 .into(binding.avatar)
-
         }
     }
 }

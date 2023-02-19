@@ -9,6 +9,7 @@ import android.os.Build
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.PermissionChecker
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
@@ -36,7 +37,7 @@ import kotlin.random.Random
         }
 
 
-        override fun onMessageReceived(message: RemoteMessage) {
+        /*override fun onMessageReceived(message: RemoteMessage) {
 
             print(Gson().toJson(message))
             try {
@@ -51,6 +52,18 @@ import kotlin.random.Random
                 println(e.message)
             }
         }
+*/
+        override fun onMessageReceived(message: RemoteMessage) {
+
+            message.data[action]?.let {
+                when (Action.valueOf(it)) {
+                    Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
+                    Action.SHARE -> handleShare(gson.fromJson(message.data[content], Share::class.java))
+                    Action.NEW_POST -> handleNewPost(gson.fromJson(message.data[content], NewPost::class.java))
+                }
+            }
+        }
+
 
         override fun onNewToken(token: String) {
             println(token)
@@ -66,21 +79,19 @@ import kotlin.random.Random
                         content.postAuthor,
                     )
                 )
-                .setContentText(content.content)
+                //.setContentText(content.content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
-            if (ActivityCompat.checkSelfPermission(
+            if (PermissionChecker.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
+                ) == PermissionChecker.PERMISSION_GRANTED
             ) {
-                return
+                NotificationManagerCompat.from(this)
+                    .notify(Random.nextInt(100_000), notification)
             }
-            NotificationManagerCompat.from(this)
-                .notify(Random.nextInt(100_000), notification)
         }
-
         private fun handleShare(content: Share) {
             val notification = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_notification)
@@ -91,21 +102,19 @@ import kotlin.random.Random
                         content.postAuthor,
                     )
                 )
-                .setContentText(content.content)
+                //.setContentText(content.content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
-            if (ActivityCompat.checkSelfPermission(
+            if (PermissionChecker.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
+                ) == PermissionChecker.PERMISSION_GRANTED
             ) {
-                return
-            }
             NotificationManagerCompat.from(this)
                 .notify(Random.nextInt(100_000), notification)
+            }
         }
-
         private fun handleNewPost(content: NewPost) {
             val bigTextForNotification = "ДАННОЕ СООБЩЕНИЕ (МАТЕРИАЛ) СОЗДАНО И (ИЛИ) " +
                     "РАСПРОСТРАНЕНО ИНОСТРАННЫМ СРЕДСТВОМ МАССОВОЙ ИНФОРМАЦИИ, " +
@@ -119,20 +128,21 @@ import kotlin.random.Random
                     )
                 )
                 .setContentText(bigTextForNotification)
-                .setStyle(NotificationCompat.BigTextStyle()
-                    .bigText(bigTextForNotification))
+                .setStyle(
+                    NotificationCompat.BigTextStyle()
+                        .bigText(bigTextForNotification)
+                )
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 
-            if (ActivityCompat.checkSelfPermission(
+            if (PermissionChecker.checkSelfPermission(
                     this,
                     Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
+                ) == PermissionChecker.PERMISSION_GRANTED
             ) {
-                return
+                NotificationManagerCompat.from(this)
+                    .notify(Random.nextInt(100_000), notification)
             }
-            NotificationManagerCompat.from(this)
-                .notify(Random.nextInt(100_000), notification)
         }
     }
 
