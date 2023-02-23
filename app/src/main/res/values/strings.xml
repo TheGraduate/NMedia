@@ -24,5 +24,6 @@
     <string name="channel_remote_description">Notifications from remote server</string>
     <string name="notification_user_share">User %1$s shared %2$s post</string>
     <string name="notification_user_newpost">%1$s published new post</string>
+    <string name="show_new_posts"> show new posts</string>
 
 </resources>

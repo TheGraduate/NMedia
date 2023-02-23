@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
 import ru.netology.nmedia.calculateParametrs
+import ru.netology.nmedia.dao.PostDao
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.view.loadCircleCrop
 
@@ -22,6 +23,8 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onPlay(post: Post) {}
     fun onPost(post: Post) {}
+
+    /*fun showPosts(post: Post) {}*/
 }
 
 class PostsAdapter(
@@ -67,6 +70,7 @@ class PostViewHolder(
             }
 
 
+
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
                     inflate(R.menu.options_post)
@@ -103,6 +107,11 @@ class PostViewHolder(
             videoScreen.setOnClickListener{
                 onInteractionListener.onPlay(post)
             }
+
+
+           /* showPosts.setOnClickListener{
+                onInteractionListener.showPosts(post)
+            }*/
 
             val url = "http://10.0.2.2:9999/static/avatars/{name}"
             Glide.with(binding.avatar)

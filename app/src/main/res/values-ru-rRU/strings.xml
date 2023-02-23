@@ -25,5 +25,6 @@
     <string name="channel_remote_description">Уведомления с удаленного сервера</string>
     <string name="notification_user_share">Пользователь %1$s поделился записью %2$s\</string>
     <string name="notification_user_newpost">%1$s опубликовал новый пост</string>
+    <string name="show_new_posts">показать новые посты</string>
 
 </resources>

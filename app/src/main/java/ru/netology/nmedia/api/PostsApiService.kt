@@ -71,6 +71,14 @@ interface PostsApiService {
 
     @POST("posts/{id}/shares")
     suspend fun repostById(@Path("id") id: Long): Response<Post>
+
+    //TODO
+    @GET("posts/{id}/newer")
+    suspend fun getNewer(@Path("id") id: Long): Response<List<Post>>
+
+    @GET("posts")
+    suspend fun showAll(): Response<List<Post>>
+
 }
 
 

@@ -36,23 +36,6 @@ import kotlin.random.Random
             }
         }
 
-
-        /*override fun onMessageReceived(message: RemoteMessage) {
-
-            print(Gson().toJson(message))
-            try {
-                message.data[action]?.let {
-                    when (Action.valueOf(it)) {
-                        Action.LIKE -> handleLike(gson.fromJson(message.data[content], Like::class.java))
-                        Action.SHARE -> handleShare(gson.fromJson(message.data[content], Share::class.java))
-                        Action.NEW_POST -> handleNewPost(gson.fromJson(message.data[content], NewPost::class.java))
-                    }
-                }
-            } catch (e : IllegalArgumentException) {
-                println(e.message)
-            }
-        }
-*/
         override fun onMessageReceived(message: RemoteMessage) {
 
             message.data[action]?.let {

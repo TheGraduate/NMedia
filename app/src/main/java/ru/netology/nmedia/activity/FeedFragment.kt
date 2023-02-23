@@ -7,10 +7,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -78,24 +80,17 @@ class FeedFragment : Fragment() {
                 val action = FeedFragmentDirections.actionFeedFragmentToPostFragment(post.id.toInt())
                 findNavController().navigate(action)
             }
+
+
         })
 
+       /* if(viewModel.isEmpty()){
+            binding.showPosts.visibility = View.GONE
+        } else{
+            binding.showPosts.visibility = View.VISIBLE
+        }
+*/
         binding.list.adapter = adapter
-        /*viewModel.data.observe(viewLifecycleOwner) { state ->
-            adapter.submitList(state.posts)
-            binding.progress.isVisible = state.loading
-            binding.errorGroup.isVisible = state.error
-            binding.emptyText.isVisible = state.empty
-        }
-
-        binding.retryButton.setOnClickListener {
-            viewModel.loadPosts()
-        }
-
-        SwipeRefreshLayout.OnRefreshListener {
-            viewModel.loadPosts()
-            binding.swipe.isRefreshing = false
-        }*/
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
             binding.progress.isVisible = state.loading
             binding.swiperefresh.isRefreshing = state.refreshing
@@ -105,9 +100,24 @@ class FeedFragment : Fragment() {
                     .show()
             }
         }
+
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                super.onItemRangeInserted(positionStart, itemCount)
+                if (positionStart == 0){
+                    binding.list.smoothScrollToPosition(0)
+                }
+            }
+        })
+
         viewModel.data.observe(viewLifecycleOwner) { state ->
             adapter.submitList(state.posts)
             binding.emptyText.isVisible = state.empty
+        }
+
+
+        viewModel.newerCount.observe(viewLifecycleOwner) { state ->
+            println(state)
         }
 
         binding.swiperefresh.setOnRefreshListener {
@@ -118,6 +128,12 @@ class FeedFragment : Fragment() {
         binding.fab.setOnClickListener {
             findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
         }
+
+        binding.showPosts.setOnClickListener {
+            viewModel.showOnlyVisible()
+        }
+
+
 
         viewModel.edited.observe(viewLifecycleOwner) {
             if (it.id == 0L) {
