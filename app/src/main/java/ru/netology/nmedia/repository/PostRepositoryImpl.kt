@@ -39,7 +39,7 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
         }
     }
 
-    override suspend fun showOnlyVisible() {
+    /*override suspend fun showOnlyVisible() {
         try {
             val response = PostsApi.service.getAll()
             if (!response.isSuccessful) {
@@ -53,7 +53,7 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
         } catch (e: Exception) {
             throw UnknownError()
         }
-    }
+    }*/
         //TODO
         override suspend fun showAll() {
             try {
@@ -70,20 +70,20 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
             }
         }
 
-    override suspend fun isEmpty(): Boolean {
+   /* override suspend fun isEmpty(): Boolean {
         try {
             val response = PostsApi.service.getAll()
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-            val body = response.body() ?: throw ApiError(response.code(), response.message())
+            //val body = response.body() ?: throw ApiError(response.code(), response.message())
             return dao.isEmpty()
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
             throw UnknownError()
         }
-    }
+    }*/
 
     override suspend fun save(post: Post) {
         try {
@@ -110,9 +110,9 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
             }
 
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-            dao.insert(body.toEntity().map{
+          /*  dao.insert(body.toEntity().map{
                   it.copy(hidden = true)
-                })
+                })*/
             emit(body.size)
         }
     }

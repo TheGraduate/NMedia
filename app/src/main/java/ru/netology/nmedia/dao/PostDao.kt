@@ -45,8 +45,8 @@ interface PostDao {
     suspend fun onShare (id: Long)
 
     //TODO
-    @Query("SELECT COUNT(*) == 0 FROM PostEntity")
-    suspend fun isEmpty(): Boolean
+   /* @Query("SELECT COUNT(*) == 0 FROM PostEntity")
+    suspend fun isEmpty(): Boolean*/
 
     @Query("SELECT COUNT(*) FROM PostEntity")
     suspend fun count(): Int
@@ -57,6 +57,6 @@ interface PostDao {
         """)
     suspend fun showAll()
 
-    @Query("SELECT * FROM PostEntity WHERE hidden = 0 ORDER BY id DESC")
-    suspend fun showOnlyVisible()
+  /*  @Query("SELECT * FROM PostEntity WHERE hidden = 0 ORDER BY id DESC")
+    suspend fun showOnlyVisible()*/
 }

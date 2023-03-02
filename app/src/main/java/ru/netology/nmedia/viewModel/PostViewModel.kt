@@ -160,18 +160,18 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         }
     }
 
-     fun isEmpty() =  viewModelScope.launch {
+    /* fun isEmpty() =  viewModelScope.launch {
          try {
               repository.isEmpty()
              _dataState.value = FeedModelState()
          }  catch (e: Exception) {
              _dataState.value = FeedModelState(error = true)
          }
-     }
+     }*/
      /*  return repository.isEmpty()
     }*/
 
-    fun showOnlyVisible() = viewModelScope.launch {
+   /* fun showOnlyVisible() = viewModelScope.launch {
         try {
             _dataState.value = FeedModelState(loading = true)
             repository.getAll()
@@ -179,5 +179,5 @@ class PostViewModel(application: Application) : AndroidViewModel(application) {
         } catch (e: Exception) {
             _dataState.value = FeedModelState(error = true)
         }
-    }
+    }*/
 }

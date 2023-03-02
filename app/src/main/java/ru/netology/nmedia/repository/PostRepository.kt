@@ -34,9 +34,9 @@ interface PostRepository {
     val data: Flow<List<Post>>
     fun getNewerCount(id: Long): Flow<Int>
     suspend fun showAll()
-    suspend fun isEmpty(): Boolean
+    //suspend fun isEmpty(): Boolean
 
-    suspend fun showOnlyVisible()
+   /* suspend fun showOnlyVisible()*/
     suspend fun getAll()
     suspend fun save(post: Post)
     suspend fun removeById(id: Long)

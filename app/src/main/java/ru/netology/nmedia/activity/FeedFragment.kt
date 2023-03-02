@@ -3,6 +3,7 @@ package ru.netology.nmedia.activity
 import android.content.Intent
 import android.content.Intent.EXTRA_TEXT
 import android.net.Uri
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.flow.emptyFlow
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -90,6 +92,8 @@ class FeedFragment : Fragment() {
             binding.showPosts.visibility = View.VISIBLE
         }
 */
+
+
         binding.list.adapter = adapter
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
             binding.progress.isVisible = state.loading
@@ -118,6 +122,7 @@ class FeedFragment : Fragment() {
 
         viewModel.newerCount.observe(viewLifecycleOwner) { state ->
             println(state)
+            binding.showPosts.visibility = View.VISIBLE
         }
 
         binding.swiperefresh.setOnRefreshListener {
@@ -130,9 +135,9 @@ class FeedFragment : Fragment() {
         }
 
         binding.showPosts.setOnClickListener {
-            viewModel.showOnlyVisible()
+            viewModel.showAll()
+            binding.showPosts.visibility = View.GONE
         }
-
 
 
         viewModel.edited.observe(viewLifecycleOwner) {
