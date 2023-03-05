@@ -56,7 +56,8 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
     }*/
         //TODO
         override suspend fun showAll() {
-            try {
+            dao.showAll()
+          /*  try {
                 val response = PostsApi.service.showAll()
                 if (!response.isSuccessful) {
                     throw ApiError(response.code(), response.message())
@@ -67,7 +68,7 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
                 throw NetworkError
             } catch (e: Exception) {
                 throw UnknownError()
-            }
+            }*/
         }
 
    /* override suspend fun isEmpty(): Boolean {
@@ -110,9 +111,9 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
             }
 
             val body = response.body() ?: throw ApiError(response.code(), response.message())
-          /*  dao.insert(body.toEntity().map{
-                  it.copy(hidden = true)
-                })*/
+            dao.insert(body.toEntity().map{
+                it.copy(hidden = true)
+            })
             emit(body.size)
         }
     }
