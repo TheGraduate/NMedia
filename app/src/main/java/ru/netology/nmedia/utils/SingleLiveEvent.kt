@@ -7,7 +7,6 @@ import androidx.lifecycle.Observer
 import java.util.concurrent.atomic.AtomicBoolean
 
 class SingleLiveEvent<T> : MutableLiveData<T>() {
-    //private var pending = false
     private var pending = AtomicBoolean(false)
 
     @MainThread
@@ -16,19 +15,13 @@ class SingleLiveEvent<T> : MutableLiveData<T>() {
             error("Multiple observers registered but only one will be notified of changes.")
         }
 
-      /*  super.observe(owner) {
-            if (pending) {
-                pending = false
-                observer.onChanged(it)
-            }
-        }*/
-
         super.observe(owner) {
             if (pending.compareAndSet(true, false)) {
                 observer.onChanged(it)
             }
         }
     }
+
     @MainThread
     override fun setValue(t: T?) {
         //pending = true

@@ -86,6 +86,8 @@ dependencies {
     def okhhtplogging_version = "4.10.0"
     def coroutines_version = "1.6.4"
     def play_services_base_version = "18.2.0"
+    def coordinatorlayout_version = '1.2.0'
+    def imagepicker_version = '2.1'
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
@@ -95,6 +97,8 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$mdc_version"
     implementation "androidx.constraintlayout:constraintlayout:$constraintlayout_version"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
     implementation "androidx.activity:activity-ktx:$activity_version"
@@ -113,7 +117,9 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
     implementation "com.squareup.okhttp3:logging-interceptor:$okhhtplogging_version"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "com.github.dhaval2404:imagepicker:$imagepicker_version"
     implementation "com.google.android.gms:play-services-base:$play_services_base_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"

@@ -3,18 +3,19 @@ package ru.netology.nmedia.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import ru.netology.nmedia.databinding.CardPostBinding
-import android.widget.PopupMenu
-import com.bumptech.glide.Glide
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
-import ru.netology.nmedia.calculateParametrs
-import ru.netology.nmedia.dao.PostDao
+import ru.netology.nmedia.calculateParameters
+import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.view.load
 import ru.netology.nmedia.view.loadCircleCrop
+import java.text.SimpleDateFormat
+import java.util.*
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
@@ -23,8 +24,7 @@ interface OnInteractionListener {
     fun onRemove(post: Post) {}
     fun onPlay(post: Post) {}
     fun onPost(post: Post) {}
-
-    /*fun showPosts(post: Post) {}*/
+    fun onImage(post: Post) {}
 }
 
 class PostsAdapter(
@@ -56,9 +56,16 @@ class PostViewHolder(
             like.isChecked = post.likedByMe
             like.text = "${post.likes}"
             share.text = "${post.shares}"
-            like.text = calculateParametrs(post.likes)
-            share.text = calculateParametrs(post.shares)
-            viewCount.text = calculateParametrs(post.views)
+            like.text = calculateParameters(post.likes)
+            share.text = calculateParameters(post.shares)
+            viewCount.text = calculateParameters(post.views)
+
+            if (post.attachment == null) {
+                attachmentImage.visibility = View.GONE
+            } else {
+                attachmentImage.visibility = View.VISIBLE
+                post.attachment.let { attachmentImage.load("http://10.0.2.2:9999/media/" + it.url) }
+            }
 
             if (post.video == "0") {
                 videoScreen.visibility = View.GONE
@@ -108,19 +115,9 @@ class PostViewHolder(
                 onInteractionListener.onPlay(post)
             }
 
-
-           /* showPosts.setOnClickListener{
-                onInteractionListener.showPosts(post)
-            }*/
-
-            val url = "http://10.0.2.2:9999/static/avatars/{name}"
-            Glide.with(binding.avatar)
-                .load(url)
-                .circleCrop()
-                .placeholder(R.drawable.ic_loading_100dp)
-                .error(R.drawable.ic_error_100dp)
-                .timeout(10_000)
-                .into(binding.avatar)
+            attachmentImage.setOnClickListener{
+                onInteractionListener.onImage(post)
+            }
         }
     }
 }

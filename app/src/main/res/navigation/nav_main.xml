@@ -32,6 +32,9 @@
             android:name="postId"
             app:argType="integer" />
         </action>
+        <action
+            android:id="@+id/action_feedFragment_to_postImageFragment"
+            app:destination="@id/postImageFragment" />
 
     </fragment>
     <fragment
@@ -47,11 +50,15 @@
         <action
             android:id="@+id/action_postFragment_to_editPostFragment"
             app:destination="@id/editPostFragment" />
-        <action
-            android:id="@+id/action_postFragment_to_feedFragment"
-            app:destination="@id/feedFragment" />
+        <action android:id="@+id/action_postFragment_to_feedFragment" />
         <argument
             android:name="postId"
             app:argType="integer" />
     </fragment>
+    <navigation android:id="@+id/navigation" />
+    <fragment
+        android:id="@+id/postImageFragment"
+        android:name="ru.netology.nmedia.activity.PostImageFragment"
+        android:label="PostImageFragment"
+        tools:layout="@layout/post_image_fragment" />
 </navigation>

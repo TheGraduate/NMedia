@@ -25,7 +25,8 @@ class PostFragment : Fragment() {
     private val args by navArgs<PostFragmentArgs>()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val binding = FragmentPostBinding.inflate(inflater, container, false)

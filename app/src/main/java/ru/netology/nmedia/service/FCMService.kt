@@ -4,9 +4,7 @@ import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.content.pm.PackageManager
 import android.os.Build
-import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.PermissionChecker
@@ -16,7 +14,7 @@ import com.google.gson.Gson
 import ru.netology.nmedia.R
 import kotlin.random.Random
 
-    class FCMService : FirebaseMessagingService() {
+class FCMService : FirebaseMessagingService() {
         private val action = "action"
         private val content = "content"
         private val channelId = "remote"
@@ -62,7 +60,6 @@ import kotlin.random.Random
                         content.postAuthor,
                     )
                 )
-                //.setContentText(content.content)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
                 .build()
 

@@ -3,26 +3,22 @@ package ru.netology.nmedia.activity
 import android.content.Intent
 import android.content.Intent.EXTRA_TEXT
 import android.net.Uri
-import android.opengl.Visibility
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isEmpty
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.flow.emptyFlow
-import ru.netology.nmedia.adapter.OnInteractionListener
-import ru.netology.nmedia.dto.Post
-import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.R
-import ru.netology.nmedia.viewModel.PostViewModel
+import ru.netology.nmedia.adapter.OnInteractionListener
+import ru.netology.nmedia.adapter.PostsAdapter
 import ru.netology.nmedia.databinding.FragmentFeedBinding
+import ru.netology.nmedia.dto.Post
+import ru.netology.nmedia.viewModel.PostViewModel
 
 class FeedFragment : Fragment() {
 
@@ -83,16 +79,16 @@ class FeedFragment : Fragment() {
                 findNavController().navigate(action)
             }
 
+            override fun onImage(post: Post) {
+                val sendPostText = Bundle()
+                sendPostText.putString(EXTRA_TEXT, post.attachment?.url)
+                findNavController().navigate(R.id.action_feedFragment_to_postImageFragment, sendPostText)
+                /*val action = FeedFragmentDirections.actionFeedFragmentToPostImageFragment()
+                findNavController().navigate(action)*/
+            }
+
 
         })
-
-       /* if(viewModel.isEmpty()){
-            binding.showPosts.visibility = View.GONE
-        } else{
-            binding.showPosts.visibility = View.VISIBLE
-        }
-*/
-
 
         binding.list.adapter = adapter
         viewModel.dataState.observe(viewLifecycleOwner) { state ->
@@ -135,9 +131,7 @@ class FeedFragment : Fragment() {
 
         binding.showPosts.setOnClickListener {
             viewModel.showAll()
-            //binding.showPosts.visibility = View.GONE
         }
-
 
         viewModel.edited.observe(viewLifecycleOwner) {
             if (it.id == 0L) {

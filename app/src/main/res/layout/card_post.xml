@@ -11,6 +11,17 @@
         android:layout_height="wrap_content"
         android:padding="@dimen/common_spacing">
 
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="@dimen/posts_avatar_size"
+            android:layout_height="@dimen/posts_avatar_size"
+            android:layout_marginBottom="@dimen/common_spacing"
+            android:contentDescription="@string/description_post_author_avatar"
+            app:layout_constraintBottom_toBottomOf="@id/header"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@sample/posts.json/data/authorAvatar" />
+
         <TextView
             android:id="@+id/author"
             android:layout_width="0dp"
@@ -42,7 +53,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="avatar,published,menu" />
+            app:constraint_referenced_ids="avatar,published,menu"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="80dp" />
 
         <TextView
             android:id="@+id/content"
@@ -61,16 +74,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:barrierDirection="bottom"
-            app:constraint_referenced_ids="content" />
+            app:constraint_referenced_ids="content,attachmentImage"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="328dp" />
 
         <TextView
             android:id="@+id/viewCount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:text="0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/footer" />
+        <!--            android:text="0"-->
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/like"
@@ -106,16 +121,6 @@
             app:layout_constraintTop_toBottomOf="@id/footer"
             app:srcCompat="@drawable/ic_baseline_visibility_24" />
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="@dimen/posts_avatar_size"
-            android:layout_height="@dimen/posts_avatar_size"
-            android:layout_marginBottom="@dimen/common_spacing"
-            android:contentDescription="@string/description_post_author_avatar"
-            app:layout_constraintBottom_toBottomOf="@id/header"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <com.google.android.material.button.MaterialButton
             android:id="@+id/menu"
             style="@style/Widget.AppTheme.IconButton"
@@ -136,15 +141,16 @@
             android:layout_marginBottom="@dimen/common_spacing"
             app:layout_constraintBottom_toTopOf="@+id/like"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.483"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/content"
+            app:layout_constraintVertical_bias="0.0"
             app:srcCompat="@android:drawable/progress_indeterminate_horizontal" />
 
         <ImageButton
             android:id="@+id/playButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="96dp"
+            android:layout_height="124dp"
             android:layout_marginStart="200dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="180dp"
@@ -152,11 +158,23 @@
             android:contentDescription="@string/description_video_button"
             app:layout_constraintBottom_toBottomOf="@+id/videoScreen"
             app:layout_constraintEnd_toEndOf="@+id/videoScreen"
-            app:layout_constraintHorizontal_bias="0.529"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/videoScreen"
             app:layout_constraintTop_toTopOf="@+id/videoScreen"
-            app:layout_constraintVertical_bias="0.0"
+            app:layout_constraintVertical_bias="0.058"
             app:srcCompat="@android:drawable/ic_media_play" />
 
+        <ImageView
+            android:id="@+id/attachmentImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.487"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/content"
+            app:layout_constraintVertical_bias="0.398"
+            tools:srcCompat="@tools:sample/avatars" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+</com.google.android.material.card.MaterialCardView>

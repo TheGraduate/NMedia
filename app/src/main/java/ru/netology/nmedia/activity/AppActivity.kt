@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -34,7 +33,6 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 }
             )
         }
-        lifecycleScope
         checkGoogleApiAvailability()
 
     }
