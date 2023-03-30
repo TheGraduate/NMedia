@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
@@ -23,10 +25,13 @@ import ru.netology.nmedia.viewModel.PostViewModel
 class FeedFragment : Fragment() {
 
     //private val viewModel: PostViewModel by activityViewModels()
-    private val viewModel: PostViewModel by viewModels(
+   /* private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
-    )
+    )*/
+    @OptIn(ExperimentalCoroutinesApi::class)
+    private val viewModel: PostViewModel by activityViewModels()
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     override fun onCreateView (
         inflater: LayoutInflater,
         container: ViewGroup?,

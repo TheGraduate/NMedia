@@ -26,4 +26,10 @@
     <string name="description_take_photo">Сделать фото</string>
     <string name="description_photo">Фото</string>
     <string name="remove">Удалить</string>
+    <string name="sign_in">Вход</string>
+    <string name="sign_up">Регистрация</string>
+    <string name="sign_out">Выход</string>
+    <string name="login">логин</string>
+    <string name="password">пароль</string>
+    <string name="enter">вход</string>
 </resources>

@@ -1,5 +1,6 @@
 package ru.netology.nmedia.repository
 
+import android.media.session.MediaSession
 import androidx.lifecycle.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -158,6 +159,23 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
         } catch (e: Exception) {
             throw UnknownError
         }
+    }
+
+   override suspend fun updateUser(login: String, pass: String): MediaSession.Token {
+       try {
+           val response = PostsApi.service.updateUser(login, pass)
+           if (response.isSuccessful) {
+               val token = response.body()
+               if (token != null) {
+                   return token
+               }
+           }
+           throw Exception("Failed to update user.")
+       } catch (e: IOException) {
+           throw NetworkError
+       } catch (e: Exception) {
+           throw UnknownError
+       }
     }
 
     override suspend fun repostById(id: Long) {

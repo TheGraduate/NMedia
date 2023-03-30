@@ -19,12 +19,12 @@ class PostImageFragment: Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val arg1Value = requireArguments().getString(Intent.EXTRA_TEXT)
+        val imageUrl = requireArguments().getString(Intent.EXTRA_TEXT)
         val view = inflater.inflate(R.layout.post_image_fragment, container, false)
         imageView = view.findViewById(R.id.postImage)
         arguments?.let {
             Glide.with(this)
-                .load("http://10.0.2.2:9999/media/$arg1Value")
+                .load("http://10.0.2.2:9999/media/$imageUrl")
                 .into(imageView)
         }
         return view

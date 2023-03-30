@@ -35,6 +35,9 @@
         <action
             android:id="@+id/action_feedFragment_to_postImageFragment"
             app:destination="@id/postImageFragment" />
+        <action
+            android:id="@+id/action_feedFragment_to_registrationFragment"
+            app:destination="@id/registrationFragment" />
 
     </fragment>
     <fragment
@@ -61,4 +64,13 @@
         android:name="ru.netology.nmedia.activity.PostImageFragment"
         android:label="PostImageFragment"
         tools:layout="@layout/post_image_fragment" />
+    <fragment
+        android:id="@+id/registrationFragment"
+        android:name="ru.netology.nmedia.activity.RegistrationFragment"
+        android:label="RegistrationFragment"
+        tools:layout="@layout/registration_fragment" >
+        <action
+            android:id="@+id/action_registrationFragment_to_feedFragment"
+            app:destination="@id/feedFragment" />
+    </fragment>
 </navigation>

@@ -25,6 +25,7 @@ interface OnInteractionListener {
     fun onPlay(post: Post) {}
     fun onPost(post: Post) {}
     fun onImage(post: Post) {}
+
 }
 
 class PostsAdapter(
@@ -76,7 +77,7 @@ class PostViewHolder(
                 playButton.visibility = View.VISIBLE
             }
 
-
+            menu.visibility = if (post.ownedByMe) View.VISIBLE else View.INVISIBLE
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -118,6 +119,7 @@ class PostViewHolder(
             attachmentImage.setOnClickListener{
                 onInteractionListener.onImage(post)
             }
+
         }
     }
 }
