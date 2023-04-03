@@ -1,8 +1,8 @@
 package ru.netology.nmedia.api
 
-import android.media.session.MediaSession
 import okhttp3.MultipartBody
 import okhttp3.OkHttpClient
+import okhttp3.ResponseBody
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
 import retrofit2.Retrofit
@@ -47,7 +47,7 @@ interface PostsApiService {
 
     @FormUrlEncoded
     @POST("users/authentication")
-    suspend fun updateUser(@Field("login") login: String, @Field("pass") pass: String): Response<MediaSession.Token>// TODO
+    suspend fun updateUser(@Field("login") login: String, @Field("pass") pass: Long): Response<ResponseBody>// TODO
 
     @GET("posts")
     suspend fun getAll(): Response<List<Post>>

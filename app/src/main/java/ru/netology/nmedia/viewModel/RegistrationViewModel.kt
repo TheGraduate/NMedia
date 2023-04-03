@@ -1,16 +1,12 @@
 package ru.netology.nmedia.viewModel
 
 import android.app.Application
-import android.media.session.MediaSession
-import android.util.JsonToken
 import androidx.lifecycle.*
+import com.google.gson.Gson
+import com.google.gson.JsonObject
 import kotlinx.coroutines.launch
-import org.json.JSONObject
-import ru.netology.nmedia.api.PostsApi
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.db.AppDb
-import ru.netology.nmedia.error.ApiError
-import ru.netology.nmedia.error.NetworkError
 import ru.netology.nmedia.model.FeedModelState
 import ru.netology.nmedia.repository.PostRepository
 import ru.netology.nmedia.repository.PostRepositoryImpl
@@ -24,12 +20,14 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
     val dataState: LiveData<FeedModelState>
         get() = _dataState
 
-    fun updateUser(login: String, pass: String) {
+    fun updateUser(login: String, pass: Long) {
         viewModelScope.launch {
             try {
-                val token = repository.updateUser(login, pass)
-                val appAuth = AppAuth.getInstance()
-                appAuth.setAuth()
+                val gson = Gson()
+                val jsonObject = gson.fromJson(repository.updateUser(login, pass).body()?.string(), JsonObject::class.java)
+                val id = jsonObject.get("id").asLong
+                val token = jsonObject.get("token").asString
+                AppAuth.getInstance().setAuth(id,token)
                 _dataState.value = FeedModelState()
             } catch (e: Exception) {
                 _dataState.value = FeedModelState(error = true)

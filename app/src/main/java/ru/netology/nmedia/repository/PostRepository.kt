@@ -1,7 +1,8 @@
 package ru.netology.nmedia.repository
 
-import android.media.session.MediaSession.Token
 import kotlinx.coroutines.flow.Flow
+import okhttp3.ResponseBody
+import retrofit2.Response
 import ru.netology.nmedia.dto.Media
 import ru.netology.nmedia.dto.MediaUpload
 import ru.netology.nmedia.dto.Post
@@ -21,7 +22,7 @@ interface PostRepository {
     suspend fun saveWithAttachment(post: Post, upload: MediaUpload)
     suspend fun upload(upload: MediaUpload): Media
 
-    suspend fun updateUser(login: String, pass: String): Token  // todo
+    suspend fun updateUser(login: String, pass: Long): Response<ResponseBody> //todo
 
 }
 
