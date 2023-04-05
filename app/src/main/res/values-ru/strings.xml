@@ -32,4 +32,8 @@
     <string name="login">логин</string>
     <string name="password">пароль</string>
     <string name="enter">вход</string>
+    <string name="are_you_sure">Вы уверены?</string>
+    <string name="you_want_authorization">Вы хотите авторизироваться?</string>
+    <string name="yes">ДА</string>
+    <string name="no">НЕТ</string>
 </resources>

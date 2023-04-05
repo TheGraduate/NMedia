@@ -162,7 +162,7 @@ class PostRepositoryImpl(private val dao: PostDao): PostRepository {
         }
     }
 
-   override suspend fun updateUser(login: String, pass: Long): Response<ResponseBody> {
+   override suspend fun updateUser(login: String, pass: String): Response<ResponseBody> {
        try {
            //val response = PostsApi.service.updateUser(login, pass)
            //if (response.isSuccessful) {

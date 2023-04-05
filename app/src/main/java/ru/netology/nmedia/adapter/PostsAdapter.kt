@@ -14,8 +14,6 @@ import ru.netology.nmedia.databinding.CardPostBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.view.load
 import ru.netology.nmedia.view.loadCircleCrop
-import java.text.SimpleDateFormat
-import java.util.*
 
 interface OnInteractionListener {
     fun onLike(post: Post) {}
@@ -29,34 +27,50 @@ interface OnInteractionListener {
 }
 
 class PostsAdapter(
-    private val onInteractionListener: OnInteractionListener,
+    private val onInteractionListener: OnInteractionListener
 ) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
         return PostViewHolder(binding, onInteractionListener)
+
     }
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
+
         val post = getItem(position)
         holder.bind(post)
+
     }
 }
 
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener
+
 ) : RecyclerView.ViewHolder(binding.root) {
 
 
     fun bind(post: Post) {
+
         binding.apply {
+
             author.text = post.author
             published.text = post.published
             content.text = post.content
             avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
-            like.isChecked = post.likedByMe
-            like.text = "${post.likes}"
-            share.text = "${post.shares}"
+
+
+            //if (AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null) {
+                like.isChecked = post.likedByMe
+            //} else {
+              //  like.isChecked = false
+          //  }
+
+
+            //like.isChecked = post.likedByMe
+            //like.text = "${post.likes}"
+            //share.text = "${post.shares}"
             like.text = calculateParameters(post.likes)
             share.text = calculateParameters(post.shares)
             viewCount.text = calculateParameters(post.views)

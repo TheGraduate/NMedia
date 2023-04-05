@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.messaging.FirebaseMessaging
@@ -41,7 +40,6 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
             )
         }
         checkGoogleApiAvailability()
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -55,25 +53,40 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val fragmentManager = supportFragmentManager
+
         return when (item.itemId) {
+
             R.id.signin -> {
-                // TODO: just hardcode it, implementation must be in homework
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_feedFragment_to_registrationFragment)
                 AppAuth.getInstance().setAuth(5, "x-token")
+
+                //if(AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null){
+                    invalidateOptionsMenu()
+                //}
                 true
 
             }
             R.id.signup -> {
-                // TODO: just hardcode it, implementation must be in homework
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_feedFragment_to_registrationFragment)
                 AppAuth.getInstance().setAuth(5, "x-token")
+                //if(AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null){
+                    invalidateOptionsMenu()
+                //}
                 true
             }
             R.id.signout -> {
-                // TODO: just hardcode it, implementation must be in homework
 
-                AppAuth.getInstance().removeAuth()
-                true
+                //if (AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null) {
+                    val dialogFragment = AuthAskFragment()
+                    dialogFragment.show(fragmentManager, "my_ask_fragment_tag")
+                  //  true
+                //} else {
+                    //AppAuth.getInstance().removeAuth()
+                    invalidateOptionsMenu()
+                    true
+                //}
+               // true
             }
             else -> super.onOptionsItemSelected(item)
         }

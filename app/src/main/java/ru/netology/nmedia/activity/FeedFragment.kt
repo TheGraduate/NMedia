@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
@@ -18,6 +17,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.adapter.PostsAdapter
+import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewModel.PostViewModel
@@ -35,27 +35,33 @@ class FeedFragment : Fragment() {
     override fun onCreateView (
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
 
     ) : View {
+        val fragmentManager = childFragmentManager
         val binding = FragmentFeedBinding.inflate(
             inflater,
             container,
             false
-
         )
 
-        val adapter = PostsAdapter (object : OnInteractionListener {
+        val adapter = PostsAdapter(object : OnInteractionListener {
 
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
 
             override fun onLike(post: Post) {
-                if (post.likedByMe) {
-                    viewModel.unlikeById(post.id)
+                if (AppAuth.getInstance().authStateFlow.value.id != 0L
+                    && AppAuth.getInstance().authStateFlow.value.token != null) {
+                    if (post.likedByMe) {
+                        viewModel.unlikeById(post.id)
+                    } else {
+                        viewModel.likeById(post.id)
+                    }
                 } else {
-                    viewModel.likeById(post.id)
+                   val dialogFragment = AuthSuggestionFragment()
+                    dialogFragment.show(fragmentManager, "my_suggestion_fragment_tag")
                 }
             }
 
@@ -69,7 +75,8 @@ class FeedFragment : Fragment() {
                     putExtra(EXTRA_TEXT, post.content)
                     type = "text/plain"
                 }
-                val shareIntent = Intent.createChooser(intent, getString(R.string.chooser_share_post))
+                val shareIntent =
+                    Intent.createChooser(intent, getString(R.string.chooser_share_post))
                 startActivity(shareIntent)
                 viewModel.repostById(post.id)
             }
@@ -80,18 +87,19 @@ class FeedFragment : Fragment() {
             }
 
             override fun onPost(post: Post) {
-                val action = FeedFragmentDirections.actionFeedFragmentToPostFragment(post.id.toInt())
+                val action =
+                    FeedFragmentDirections.actionFeedFragmentToPostFragment(post.id.toInt())
                 findNavController().navigate(action)
             }
 
             override fun onImage(post: Post) {
                 val sendPostText = Bundle()
                 sendPostText.putString(EXTRA_TEXT, post.attachment?.url)
-                findNavController().navigate(R.id.action_feedFragment_to_postImageFragment, sendPostText)
-                /*val action = FeedFragmentDirections.actionFeedFragmentToPostImageFragment()
-                findNavController().navigate(action)*/
+                findNavController().navigate(
+                    R.id.action_feedFragment_to_postImageFragment,
+                    sendPostText
+                )
             }
-
 
         })
 
@@ -106,10 +114,10 @@ class FeedFragment : Fragment() {
             }
         }
 
-        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver(){
+        adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
                 super.onItemRangeInserted(positionStart, itemCount)
-                if (positionStart == 0){
+                if (positionStart == 0) {
                     binding.list.smoothScrollToPosition(0)
                 }
             }
@@ -129,9 +137,23 @@ class FeedFragment : Fragment() {
             viewModel.refreshPosts()
         }
 
+        /*viewModel.data.observe(viewLifecycleOwner) {
+            if (AppAuth.getInstance().authStateFlow.value.id != 0L) {
+                binding.fab.visibility = View.VISIBLE
+            } else {
+                binding.fab.visibility = View.GONE
+              }
+        }*/
 
         binding.fab.setOnClickListener {
-            findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            if (AppAuth.getInstance().authStateFlow.value.id != 0L
+                && AppAuth.getInstance().authStateFlow.value.token != null) {
+                findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
+            } else {
+                val dialogFragment = AuthSuggestionFragment()
+                dialogFragment.show(fragmentManager, "my_suggest_fragment_tag")
+            }
+
         }
 
         binding.showPosts.setOnClickListener {

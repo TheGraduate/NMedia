@@ -8,11 +8,10 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import ru.netology.nmedia.R
 import ru.netology.nmedia.databinding.RegistrationFragmentBinding
 import ru.netology.nmedia.viewModel.RegistrationViewModel
 
-class RegistrationFragment : Fragment() { // todo
+class RegistrationFragment : Fragment() {
 
     private lateinit var login: EditText
     private lateinit var password: EditText
@@ -29,19 +28,15 @@ class RegistrationFragment : Fragment() { // todo
             false
         )
 
-        val view = inflater.inflate(R.layout.registration_fragment, container, false)
-
-        login = view.findViewById(R.id.login)
-        password = view.findViewById(R.id.password)
+        login = binding.login
+        password = binding.password
 
         binding.enterButton.setOnClickListener {
             val loginStr = login.text.toString()
             val passwordStr = password.text.toString()
-            viewModel.updateUser(loginStr, passwordStr.toLong())
-            //findNavController().popBackStack()
-            //findNavController().navigateUp()
-            findNavController().navigate(R.id.action_registrationFragment_to_feedFragment)
+            viewModel.updateUser(loginStr, passwordStr)
+            findNavController().navigateUp()
         }
-        return view
+        return binding.root
     }
 }

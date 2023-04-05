@@ -20,7 +20,7 @@ class RegistrationViewModel(application: Application) : AndroidViewModel(applica
     val dataState: LiveData<FeedModelState>
         get() = _dataState
 
-    fun updateUser(login: String, pass: Long) {
+    fun updateUser(login: String, pass: String) {
         viewModelScope.launch {
             try {
                 val gson = Gson()

@@ -36,4 +36,8 @@
     <string name="login">login</string>
     <string name="password">password</string>
     <string name="enter">enter</string>
+    <string name="are_you_sure">Are you sure?</string>
+    <string name="you_want_authorization">You want authorization?</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
 </resources>
