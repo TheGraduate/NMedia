@@ -5,14 +5,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import ru.netology.nmedia.R
 
 class PostImageFragment: Fragment() {
-
-    private lateinit var imageView: ImageView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -21,11 +18,10 @@ class PostImageFragment: Fragment() {
     ): View {
         val imageUrl = requireArguments().getString(Intent.EXTRA_TEXT)
         val view = inflater.inflate(R.layout.post_image_fragment, container, false)
-        imageView = view.findViewById(R.id.postImage)
         arguments?.let {
             Glide.with(this)
                 .load("http://10.0.2.2:9999/media/$imageUrl")
-                .into(imageView)
+                .into(view.findViewById(R.id.postImage))
         }
         return view
     }

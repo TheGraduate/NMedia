@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.databinding.RegistrationFragmentBinding
 import ru.netology.nmedia.viewModel.RegistrationViewModel
 
+@AndroidEntryPoint
 class RegistrationFragment : Fragment() {
-
-    private lateinit var login: EditText
-    private lateinit var password: EditText
-    private val viewModel: RegistrationViewModel by viewModels()
+    private val viewModel: RegistrationViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,12 +28,9 @@ class RegistrationFragment : Fragment() {
             false
         )
 
-        login = binding.login
-        password = binding.password
-
         binding.enterButton.setOnClickListener {
-            val loginStr = login.text.toString()
-            val passwordStr = password.text.toString()
+            val loginStr = binding.login.text.toString()
+            val passwordStr = binding.password.text.toString()
             viewModel.updateUser(loginStr, passwordStr)
             findNavController().navigateUp()
         }

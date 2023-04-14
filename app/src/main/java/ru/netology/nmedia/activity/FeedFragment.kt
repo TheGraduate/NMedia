@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nmedia.R
 import ru.netology.nmedia.adapter.OnInteractionListener
@@ -21,13 +22,17 @@ import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.databinding.FragmentFeedBinding
 import ru.netology.nmedia.dto.Post
 import ru.netology.nmedia.viewModel.PostViewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class FeedFragment : Fragment() {
 
     //private val viewModel: PostViewModel by activityViewModels()
    /* private val viewModel: PostViewModel by viewModels(
         ownerProducer = ::requireParentFragment
     )*/
+    @Inject
+    lateinit var auth: AppAuth
     @OptIn(ExperimentalCoroutinesApi::class)
     private val viewModel: PostViewModel by activityViewModels()
 
@@ -52,8 +57,8 @@ class FeedFragment : Fragment() {
             }
 
             override fun onLike(post: Post) {
-                if (AppAuth.getInstance().authStateFlow.value.id != 0L
-                    && AppAuth.getInstance().authStateFlow.value.token != null) {
+                if (auth.authStateFlow.value.id != 0L
+                    && auth.authStateFlow.value.token != null) {
                     if (post.likedByMe) {
                         viewModel.unlikeById(post.id)
                     } else {
@@ -146,8 +151,8 @@ class FeedFragment : Fragment() {
         }*/
 
         binding.fab.setOnClickListener {
-            if (AppAuth.getInstance().authStateFlow.value.id != 0L
-                && AppAuth.getInstance().authStateFlow.value.token != null) {
+            if (auth.authStateFlow.value.id != 0L
+                && auth.authStateFlow.value.token != null) {
                 findNavController().navigate(R.id.action_feedFragment_to_newPostFragment)
             } else {
                 val dialogFragment = AuthSuggestionFragment()

@@ -3,7 +3,6 @@ package ru.netology.nmedia.dao
 import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 import ru.netology.nmedia.entity.PostEntity
-import ru.netology.nmedia.enumeration.AttachmentType
 
 @Dao
     interface PostDao {
@@ -54,9 +53,9 @@ import ru.netology.nmedia.enumeration.AttachmentType
         suspend fun showOnlyVisible()*/
     }
 
-    class Converter {
+  /*  class Converter {
         @TypeConverter
         fun toAttachmentType(value: String) = enumValueOf<AttachmentType>(value)
         @TypeConverter
         fun fromAttachmentType(value: AttachmentType) = value.name
-    }
+    }*/

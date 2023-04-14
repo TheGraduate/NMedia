@@ -11,7 +11,6 @@ class AuthSuggestionFragment: DialogFragment() {
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(R.layout.fragment_auth_suggestion)
-            //.setTitle("Авторизация")
             .setPositiveButton(R.string.yes) { _, _ ->
                 findNavController().navigate(R.id.action_feedFragment_to_registrationFragment)
                 dialog?.dismiss()

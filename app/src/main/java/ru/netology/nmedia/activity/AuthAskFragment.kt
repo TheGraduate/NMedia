@@ -4,16 +4,20 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AuthAskFragment: DialogFragment() {
+    @Inject
+    lateinit var auth: AppAuth
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(R.layout.fragment_auth_ask)
-            //.setTitle("Вы уверены?")
             .setPositiveButton(R.string.yes) { _, _ ->
-                AppAuth.getInstance().removeAuth()
+                auth.removeAuth()
                 dialog?.dismiss()
             }
             .setNegativeButton(R.string.no) { _, _ ->

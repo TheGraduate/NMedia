@@ -11,13 +11,20 @@ import androidx.navigation.findNavController
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.messaging.FirebaseMessaging
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.activity.NewPostFragment.Companion.textArg
 import ru.netology.nmedia.auth.AppAuth
 import ru.netology.nmedia.viewModel.AuthViewModel
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AppActivity : AppCompatActivity(R.layout.activity_app) {
+    @Inject
+    lateinit var auth: AppAuth
     private val viewModel: AuthViewModel by viewModels()
+    lateinit var firebaseMessaging: FirebaseMessaging
+    lateinit var googleApiAvailability: GoogleApiAvailability
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -59,41 +66,29 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
             R.id.signin -> {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_feedFragment_to_registrationFragment)
-                AppAuth.getInstance().setAuth(5, "x-token")
-
-                //if(AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null){
+                auth.setAuth(5, "x-token")
                     invalidateOptionsMenu()
-                //}
                 true
 
             }
             R.id.signup -> {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_feedFragment_to_registrationFragment)
-                AppAuth.getInstance().setAuth(5, "x-token")
-                //if(AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null){
+                auth.setAuth(5, "x-token")
                     invalidateOptionsMenu()
-                //}
                 true
             }
             R.id.signout -> {
-
-                //if (AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null) {
                     val dialogFragment = AuthAskFragment()
                     dialogFragment.show(fragmentManager, "my_ask_fragment_tag")
-                  //  true
-                //} else {
-                    //AppAuth.getInstance().removeAuth()
                     invalidateOptionsMenu()
                     true
-                //}
-               // true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
 
     private fun checkGoogleApiAvailability() {
-        with(GoogleApiAvailability.getInstance()) {
+        with(googleApiAvailability) {
             val code = isGooglePlayServicesAvailable(this@AppActivity)
             if (code == ConnectionResult.SUCCESS) {
                 return@with
@@ -106,7 +101,7 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
                 .show()
         }
 
-        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+        firebaseMessaging.token.addOnSuccessListener {
             println(it)
         }
     }

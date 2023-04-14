@@ -13,6 +13,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
+import javax.inject.Inject
 import kotlin.random.Random
 
 class FCMService : FirebaseMessagingService() {
@@ -20,6 +21,8 @@ class FCMService : FirebaseMessagingService() {
         private val content = "content"
         private val channelId = "remote"
         private val gson = Gson()
+        @Inject
+        lateinit var auth: AppAuth
 
         override fun onCreate() {
             super.onCreate()
@@ -47,19 +50,19 @@ class FCMService : FirebaseMessagingService() {
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             when {
-                messageNotification.recipientId == AppAuth.getInstance().authStateFlow.value.id.toString() -> {
+                messageNotification.recipientId == auth.authStateFlow.value.id.toString() -> {
                     notificationBuilder.setContentTitle("ID: ${messageNotification.recipientId}")
                         .setContentText("Content: ${messageNotification.content}")
                 }
 
                 messageNotification.recipientId == "0" &&
-                        messageNotification.recipientId != AppAuth.getInstance().authStateFlow.value.id.toString() -> {
-                    AppAuth.getInstance().authStateFlow.value.token?.let { onNewToken(it) }
+                        messageNotification.recipientId != auth.authStateFlow.value.id.toString() -> {
+                    auth.authStateFlow.value.token?.let { onNewToken(it) }
                 }
 
                 messageNotification.recipientId != "0" &&
-                        messageNotification.recipientId != AppAuth.getInstance().authStateFlow.value.id.toString() -> {
-                    AppAuth.getInstance().authStateFlow.value.token?.let { onNewToken(it) }
+                        messageNotification.recipientId != auth.authStateFlow.value.id.toString() -> {
+                    auth.authStateFlow.value.token?.let { onNewToken(it) }
                 }
 
                 messageNotification.recipientId == null -> {
@@ -91,7 +94,7 @@ class FCMService : FirebaseMessagingService() {
 
         override fun onNewToken(token: String) {
             //println(token)
-            AppAuth.getInstance().sendPushToken(token)
+            auth.sendPushToken(token)
         }
 
        /* private fun handleLike(content: Like) {

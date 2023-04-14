@@ -7,9 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import ru.netology.nmedia.adapter.OnInteractionListener
 import ru.netology.nmedia.dto.Post
@@ -18,12 +19,10 @@ import ru.netology.nmedia.R
 import ru.netology.nmedia.viewModel.PostViewModel
 import ru.netology.nmedia.databinding.FragmentPostBinding
 
+@AndroidEntryPoint
 class PostFragment : Fragment() {
     @OptIn(ExperimentalCoroutinesApi::class)
-    private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )
-
+    private val viewModel: PostViewModel by activityViewModels()
     private val args by navArgs<PostFragmentArgs>()
 
     @OptIn(ExperimentalCoroutinesApi::class)
