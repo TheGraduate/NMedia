@@ -52,10 +52,14 @@ class PostRepositoryImpl @Inject constructor(
             dao.showAll()
         }
 
-
-    override suspend fun save(post: Post) {
+    override suspend fun save(post: Post, upload: MediaUpload?) {
         try {
-            val response = apiService.save(post)
+            val postWithAttachment = upload?.let {
+                upload(it)
+            }?.let {
+                post.copy(attachment = Attachment(it.id, AttachmentType.IMAGE))
+            }
+            val response = apiService.save(postWithAttachment ?: post)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
@@ -65,7 +69,7 @@ class PostRepositoryImpl @Inject constructor(
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {
-            throw UnknownError()
+            throw UnknownError
         }
     }
 
@@ -103,13 +107,11 @@ class PostRepositoryImpl @Inject constructor(
     }
 
     override suspend fun unlikeById(id: Long) {
-
         try {
             val response = apiService.unlikeById(id)
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-
             val body = response.body() ?: throw ApiError(response.code(), response.message())
             dao.insert(PostEntity.fromDto(body))
         } catch (e: IOException) {
@@ -120,7 +122,6 @@ class PostRepositoryImpl @Inject constructor(
     }
 
     override suspend fun removeById(id: Long) {
-
         try {
             val response = apiService.removeById(id)
             if (!response.isSuccessful) {
@@ -133,21 +134,6 @@ class PostRepositoryImpl @Inject constructor(
             throw UnknownError()
         }
     }
-
-    override suspend fun saveWithAttachment(post: Post, upload: MediaUpload) {
-        try {
-            val media = upload(upload)
-            val postWithAttachment = post.copy(attachment = Attachment(media.id, AttachmentType.IMAGE))
-            save(postWithAttachment)
-        } catch (e: AppError) {
-            throw e
-        } catch (e: IOException) {
-            throw NetworkError
-        } catch (e: Exception) {
-            throw UnknownError
-        }
-    }
-
 
     override suspend fun upload(upload: MediaUpload): Media {
         try {
@@ -170,14 +156,7 @@ class PostRepositoryImpl @Inject constructor(
 
    override suspend fun updateUser(login: String, pass: String): Response<ResponseBody> {
        try {
-           //val response = PostsApi.service.updateUser(login, pass)
-           //if (response.isSuccessful) {
-             //  val token = response.body()
-              // if (token != null) {
-                   return apiService.updateUser(login, pass)
-              // }
-          // }
-          // throw Exception("Failed to update user.")
+           return apiService.updateUser(login, pass)
        } catch (e: IOException) {
            throw NetworkError
        } catch (e: Exception) {
@@ -191,7 +170,7 @@ class PostRepositoryImpl @Inject constructor(
             if (!response.isSuccessful) {
                 throw ApiError(response.code(), response.message())
             }
-            dao.onShare(id)
+            dao.repostById(id)
         } catch (e: IOException) {
             throw NetworkError
         } catch (e: Exception) {

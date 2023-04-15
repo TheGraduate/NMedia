@@ -11,11 +11,13 @@ import androidx.core.content.PermissionChecker
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.google.gson.Gson
+import dagger.hilt.android.AndroidEntryPoint
 import ru.netology.nmedia.R
 import ru.netology.nmedia.auth.AppAuth
 import javax.inject.Inject
 import kotlin.random.Random
 
+@AndroidEntryPoint
 class FCMService : FirebaseMessagingService() {
         private val action = "action"
         private val content = "content"
@@ -40,13 +42,10 @@ class FCMService : FirebaseMessagingService() {
         }
 
         override fun onMessageReceived(message: RemoteMessage) {
-            //println(message.data["content"])
             val messageNotification = gson.fromJson(message.data[content], ru.netology.nmedia.dao.Notification::class.java)
 
             val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.drawable.ic_notification)
-                //.setContentTitle("Заголовок уведомления")
-                //.setContentText("Текст уведомления")
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
             when {

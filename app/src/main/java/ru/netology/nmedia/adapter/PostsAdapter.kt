@@ -47,30 +47,16 @@ class PostsAdapter(
 class PostViewHolder(
     private val binding: CardPostBinding,
     private val onInteractionListener: OnInteractionListener
-
 ) : RecyclerView.ViewHolder(binding.root) {
-
 
     fun bind(post: Post) {
 
         binding.apply {
-
             author.text = post.author
             published.text = post.published
             content.text = post.content
             avatar.loadCircleCrop("${BuildConfig.BASE_URL}/avatars/${post.authorAvatar}")
-
-
-            //if (AppAuth.getInstance().authStateFlow.value.id != 0L && AppAuth.getInstance().authStateFlow.value.token != null) {
-                like.isChecked = post.likedByMe
-            //} else {
-              //  like.isChecked = false
-          //  }
-
-
-            //like.isChecked = post.likedByMe
-            //like.text = "${post.likes}"
-            //share.text = "${post.shares}"
+            like.isChecked = post.likedByMe
             like.text = calculateParameters(post.likes)
             share.text = calculateParameters(post.shares)
             viewCount.text = calculateParameters(post.views)
@@ -137,6 +123,7 @@ class PostViewHolder(
         }
     }
 }
+
     class PostDiffCallback : DiffUtil.ItemCallback<Post>() {
         override fun areItemsTheSame(oldItem: Post, newItem: Post): Boolean {
             return oldItem.id == newItem.id

@@ -13,12 +13,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
-//import ru.netology.nmedia.api.Api
 import ru.netology.nmedia.api.ApiService
 import ru.netology.nmedia.dto.PushToken
 import javax.inject.Inject
 import javax.inject.Singleton
-
 
 @Singleton
 class AppAuth @Inject constructor(
@@ -95,22 +93,6 @@ class AppAuth @Inject constructor(
         return hiltEntryPoint.apiService()
     }
 
-    /*companion object {
-        @Volatile
-        private var instance: AppAuth? = null
-
-        fun getInstance(): AppAuth = synchronized(this) {
-            instance ?: throw IllegalStateException(
-                "AppAuth is not initialized, you must call AppAuth.initializeApp(Context context) first."
-            )
-        }
-
-        fun initApp(context: Context): AppAuth = instance ?: synchronized(this) {
-            instance ?: buildAuth(context).also { instance = it }
-        }
-
-        private fun buildAuth(context: Context): AppAuth = AppAuth(context)
-    }*/
 }
 
 data class AuthState(val id: Long = 0, val token: String? = null)

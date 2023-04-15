@@ -27,10 +27,6 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class FeedFragment : Fragment() {
 
-    //private val viewModel: PostViewModel by activityViewModels()
-   /* private val viewModel: PostViewModel by viewModels(
-        ownerProducer = ::requireParentFragment
-    )*/
     @Inject
     lateinit var auth: AppAuth
     @OptIn(ExperimentalCoroutinesApi::class)
@@ -141,14 +137,6 @@ class FeedFragment : Fragment() {
         binding.swiperefresh.setOnRefreshListener {
             viewModel.refreshPosts()
         }
-
-        /*viewModel.data.observe(viewLifecycleOwner) {
-            if (AppAuth.getInstance().authStateFlow.value.id != 0L) {
-                binding.fab.visibility = View.VISIBLE
-            } else {
-                binding.fab.visibility = View.GONE
-              }
-        }*/
 
         binding.fab.setOnClickListener {
             if (auth.authStateFlow.value.id != 0L

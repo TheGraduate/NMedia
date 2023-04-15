@@ -38,7 +38,7 @@ import ru.netology.nmedia.entity.PostEntity
             shares = shares + 1
             WHERE id = :id
             """)
-        suspend fun onShare (id: Long)
+        suspend fun repostById (id: Long)
 
         @Query("SELECT COUNT(*) FROM PostEntity")
         suspend fun count(): Int
@@ -49,13 +49,4 @@ import ru.netology.nmedia.entity.PostEntity
             """)
         suspend fun showAll()
 
-      /*  @Query("SELECT * FROM PostEntity WHERE hidden = 0 ORDER BY id DESC")
-        suspend fun showOnlyVisible()*/
     }
-
-  /*  class Converter {
-        @TypeConverter
-        fun toAttachmentType(value: String) = enumValueOf<AttachmentType>(value)
-        @TypeConverter
-        fun fromAttachmentType(value: AttachmentType) = value.name
-    }*/

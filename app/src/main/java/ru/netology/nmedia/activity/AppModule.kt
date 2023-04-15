@@ -1,6 +1,5 @@
 package ru.netology.nmedia.activity
 
-import android.app.Activity
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +17,7 @@ object AppModule {
     }
 
     @Provides
-    fun provideGoogleApiAvailability(activity: Activity): GoogleApiAvailability {
+    fun provideGoogleApiAvailability(): GoogleApiAvailability {
         return GoogleApiAvailability.getInstance()
     }
 }

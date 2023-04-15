@@ -70,10 +70,3 @@ interface ApiService {
     suspend fun  saveToken(@Body pushToken: PushToken): Response<Unit>
 
 }
-
-/*
-object Api {
-    val service: ApiService by lazy {
-        retrofit.create(ApiService::class.java)
-    }
-}*/

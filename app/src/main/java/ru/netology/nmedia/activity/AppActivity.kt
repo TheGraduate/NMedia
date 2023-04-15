@@ -23,7 +23,9 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
     @Inject
     lateinit var auth: AppAuth
     private val viewModel: AuthViewModel by viewModels()
+    @Inject
     lateinit var firebaseMessaging: FirebaseMessaging
+    @Inject
     lateinit var googleApiAvailability: GoogleApiAvailability
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

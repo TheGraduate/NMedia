@@ -1,6 +1,7 @@
 package ru.netology.nmedia.viewModel
 
 import android.net.Uri
+import androidx.core.net.toFile
 import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -43,12 +44,6 @@ class PostViewModel @Inject constructor(
     appAuth: AppAuth
 ) : ViewModel() {
 
-   /* private val repository: PostRepository =
-        PostRepositoryImpl(AppDb.getInstance(context = application).postDao())*/
-
-    /*val data: LiveData<FeedModel> = repository.data
-        .map(::FeedModel)
-        .asLiveData(Dispatchers.Default)*/
     val data: LiveData<FeedModel> = appAuth
         .authStateFlow
         .flatMapLatest { (myId, _) ->
@@ -106,19 +101,15 @@ class PostViewModel @Inject constructor(
 
     fun save() {
         edited.value?.let {
-            _postCreated.value = Unit
             viewModelScope.launch {
                 try {
-                    when(_photo.value) {
-                        noPhoto -> repository.save(it)
-                        else -> _photo.value?.file?.let { file ->
-                            repository.saveWithAttachment(it, MediaUpload(file))
-                        }
-                    }
+                    repository.save(
+                        it, _photo.value?.uri?.let { MediaUpload(it.toFile()) }
+                    )
 
-                    _dataState.value = FeedModelState()
+                    _postCreated.value = Unit
                 } catch (e: Exception) {
-                    _dataState.value = FeedModelState(error = true)
+                    e.printStackTrace()
                 }
             }
         }
