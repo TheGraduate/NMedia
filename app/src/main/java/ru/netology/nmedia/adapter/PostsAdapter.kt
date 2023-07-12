@@ -4,8 +4,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import ru.netology.nmedia.BuildConfig
 import ru.netology.nmedia.R
@@ -23,12 +23,11 @@ interface OnInteractionListener {
     fun onPlay(post: Post) {}
     fun onPost(post: Post) {}
     fun onImage(post: Post) {}
-
 }
 
 class PostsAdapter(
     private val onInteractionListener: OnInteractionListener
-) : ListAdapter<Post, PostViewHolder>(PostDiffCallback()) {
+) : PagingDataAdapter<Post, PostViewHolder>(PostDiffCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         val binding = CardPostBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
@@ -38,8 +37,11 @@ class PostsAdapter(
 
     override fun onBindViewHolder(holder: PostViewHolder, position: Int) {
 
-        val post = getItem(position)
-        holder.bind(post)
+        getItem(position)?.let {
+            holder.bind(it)
+        }
+        /*val post = getItem(position)
+        holder.bind(post)*/
 
     }
 }
@@ -50,7 +52,6 @@ class PostViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     fun bind(post: Post) {
-
         binding.apply {
             author.text = post.author
             published.text = post.published
@@ -102,7 +103,6 @@ class PostViewHolder(
             root.setOnClickListener {
                 onInteractionListener.onPost(post)
             }
-
             like.setOnClickListener {
                 onInteractionListener.onLike(post)
             }
@@ -115,7 +115,6 @@ class PostViewHolder(
             videoScreen.setOnClickListener{
                 onInteractionListener.onPlay(post)
             }
-
             attachmentImage.setOnClickListener{
                 onInteractionListener.onImage(post)
             }

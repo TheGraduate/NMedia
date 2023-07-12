@@ -63,27 +63,24 @@ class AppActivity : AppCompatActivity(R.layout.activity_app) {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         val fragmentManager = supportFragmentManager
-
         return when (item.itemId) {
-
             R.id.signin -> {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_feedFragment_to_registrationFragment)
                 auth.setAuth(5, "x-token")
-                    invalidateOptionsMenu()
+                invalidateOptionsMenu()
                 true
-
             }
             R.id.signup -> {
                 findNavController(R.id.nav_host_fragment).navigate(R.id.action_feedFragment_to_registrationFragment)
                 auth.setAuth(5, "x-token")
-                    invalidateOptionsMenu()
+                invalidateOptionsMenu()
                 true
             }
             R.id.signout -> {
-                    val dialogFragment = AuthAskFragment()
-                    dialogFragment.show(fragmentManager, "my_ask_fragment_tag")
-                    invalidateOptionsMenu()
-                    true
+                val dialogFragment = AuthAskFragment()
+                dialogFragment.show(fragmentManager, "my_ask_fragment_tag")
+                invalidateOptionsMenu()
+                true
             }
             else -> super.onOptionsItemSelected(item)
         }

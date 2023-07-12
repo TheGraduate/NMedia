@@ -64,10 +64,10 @@ class FCMService : FirebaseMessagingService() {
                     auth.authStateFlow.value.token?.let { onNewToken(it) }
                 }
 
-                messageNotification.recipientId == null -> {
+              /*  messageNotification.recipientId == null -> {
                     notificationBuilder.setContentTitle("ID: ${messageNotification.recipientId}")
                         .setContentText("Content: ${messageNotification.content}")
-                }
+                }*/
             }
 
             val notification = notificationBuilder.build()

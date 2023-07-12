@@ -36,7 +36,6 @@ class PostFragment : Fragment() {
 
         val viewHolder = PostViewHolder(binding.cardPost, object : OnInteractionListener {
 
-
             override fun onEdit(post: Post) {
                 viewModel.edit(post)
             }
@@ -68,13 +67,38 @@ class PostFragment : Fragment() {
 
         })
 
-        viewModel.data.observe(viewLifecycleOwner) { posts ->
+
+       /* viewModel.data.observe(viewLifecycleOwner) { posts ->
             val post = posts.posts.find { it.id == args.postId.toLong() } ?: run {
                 findNavController().navigateUp()
                 return@observe
             }
             viewHolder.bind(post)
-        }
+        }*/
+
+      /*  lifecycleScope.launch {
+            viewModel.data.collectLatest { pagingData ->
+                val post = pagingData.find {
+                    it.id == args.postId.toLong()
+                }
+                if (post == null) {
+                    findNavController().navigateUp()
+                } else {
+                    viewHolder.bind(post)
+                }
+            }
+        }*/
+
+       /* lifecycleScope.launch {
+            viewModel.data.collectLatest { pagingData ->
+                val post = pagingData.filter { it.id == args.postId.toLong() } .firstOrNull()
+                if (post == null) {
+                    findNavController().navigateUp()
+                } else {
+                    viewHolder.bind(post)
+                }
+            }
+        }*/
 
         viewModel.edited.observe(viewLifecycleOwner) {
             if (it.id == 0L) {

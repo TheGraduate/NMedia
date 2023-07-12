@@ -5,8 +5,6 @@ plugins {
     id 'androidx.navigation.safeargs.kotlin'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
-
-
     id 'dagger.hilt.android.plugin'
 }
 
@@ -49,13 +47,14 @@ android {
             buildConfigField "String", "BASE_URL", '"http://10.0.2.2:9999"'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '17'
         freeCompilerArgs += ["-Xopt-in=kotlin.RequiresOptIn"]
     }
     namespace 'ru.netology.nmedia'
@@ -63,9 +62,8 @@ android {
 }
 
 dependencies {
-
-    implementation 'androidx.core:core-ktx:1.10.0'
-    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.5'
+    implementation 'androidx.core:core-ktx:1.10.1'
+    implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.9.6'
     def core_version = "1.10.0"
     def appcompat_version = '1.6.1'
     def constraintlayout_version = '2.1.4'
@@ -74,23 +72,24 @@ dependencies {
     def junit_version = "4.13.2"
     def ext_junit_version = "1.1.5"
     def espresso_core_version = "3.5.1"
-    def fragment_version = "1.5.6"
-    def activity_version = "1.7.0"
+    def fragment_version = '1.6.0'
+    def activity_version = '1.7.1'
     def lifecycle_version = "2.6.1"
-    def mdc_version = '1.8.0'
-    def room_version = "2.5.1"
-    def glide_version = "4.14.2"
+    def mdc_version = '1.9.0'
+    def room_version = "2.5.2"
+    def glide_version = '4.15.1'
     def retrofit_version = "2.9.0"
-    def okhhtplogging_version = "4.10.0"
-    def coroutines_version = "1.6.4"
+    def okhhtplogging_version = '5.0.0-alpha.11'
+    def coroutines_version = '1.7.1'
     def play_services_base_version = "18.2.0"
     def coordinatorlayout_version = '1.2.0'
     def imagepicker_version = '2.1'
+    def paging_version = "3.1.1"
 
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
-    implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'
-    implementation "androidx.core:core-ktx:$core_version"
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.6.0'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.6.0'
+    implementation "androidx.core:core-ktx:1.10.1"
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:$swiperefreshlayout_version"
     implementation "androidx.appcompat:appcompat:$appcompat_version"
     implementation "com.google.android.material:material:$mdc_version"
@@ -99,13 +98,13 @@ dependencies {
     implementation "androidx.coordinatorlayout:coordinatorlayout:$coordinatorlayout_version"
     implementation "androidx.recyclerview:recyclerview:$recyclerview_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
-    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation 'androidx.activity:activity-ktx:1.7.2'
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-ktx:$room_version"
-    implementation platform('com.google.firebase:firebase-bom:26.7.0')
+    implementation platform('com.google.firebase:firebase-bom:32.0.0')
     implementation 'com.google.firebase:firebase-messaging-ktx:23.1.2'
     implementation "com.google.android.gms:play-services-base:$play_services_base_version"
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -116,9 +115,9 @@ dependencies {
     implementation "com.github.dhaval2404:imagepicker:$imagepicker_version"
     implementation "com.google.android.gms:play-services-base:$play_services_base_version"
     implementation "androidx.fragment:fragment-ktx:$fragment_version"
-
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
+    implementation "androidx.paging:paging-runtime-ktx:$paging_version"
 
     testImplementation "junit:junit:$junit_version"
     androidTestImplementation "androidx.test.ext:junit:$ext_junit_version"
